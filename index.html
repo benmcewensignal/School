@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The School Chooser — Sussex secondary school odds, fit and fees</title>
+<meta name="description" content="Work out your real chances of a place at each Sussex secondary school from your postcode, how well each one fits your child, and what the fee-paying alternatives actually cost.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E2A38">
+<meta property="og:title" content="The School Chooser">
+<meta property="og:description" content="Your odds, your fit, your options — five Sussex districts, official data, no league tables.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E2A38'/%3E%3Ccircle cx='16' cy='13' r='5' fill='%23147D74'/%3E%3Crect x='9' y='21' width='14' height='3' rx='1.5' fill='%23B97F10'/%3E%3C/svg%3E">
+<style>
+:root{
+  --chalk:#FAFBFC; --marine:#0E2A38; --marine-soft:#3E5766;
+  --teal:#147D74; --teal-soft:#E3F0EE;
+  --amber:#B97F10; --amber-soft:#F7EEDB;
+  --risk:#A5372C; --risk-soft:#F6E7E4;
+  --line:#D9E0E4; --card:#FFFFFF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:1rem;line-height:1.4}
+input,select{font-size:16px}
+html,body{max-width:100%;overflow-x:hidden}
+body{background:var(--chalk);color:var(--marine);
+  font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  font-size:.95rem;line-height:1.5;padding-bottom:4rem}
+.wrap{max-width:720px;margin:0 auto;padding:1.1rem}
+header{padding:1.6rem 0 1rem}
+.eyebrow{font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);font-weight:700}
+h1{font-family:Georgia,serif;font-weight:600;font-size:clamp(1.5rem,5.5vw,2.1rem);line-height:1.1;margin:.3rem 0 .3rem}
+/* stepper */
+.steps{display:flex;gap:.4rem;margin:1rem 0 1.25rem}
+.steps div{flex:1;height:5px;border-radius:3px;background:var(--line);transition:background .2s}
+.steps div.on{background:var(--teal)}
+.steplabel{font-size:.7rem;color:var(--marine-soft);letter-spacing:.04em;text-transform:uppercase;font-weight:700;margin-bottom:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.05rem 1.1rem;margin:.8rem 0}
+h2{font-size:1.05rem;font-weight:700;margin-bottom:.3rem}
+.sub{font-size:.875rem;color:var(--marine-soft);margin-bottom:.7rem}
+label{display:block;font-size:.8rem;font-weight:600;margin:.7rem 0 .25rem}
+input[type=text],input[type=number]{width:100%;padding:.6rem .7rem;font-size:.95rem;
+  border:1.5px solid var(--line);border-radius:8px;background:var(--chalk)}
+input:focus{outline:2px solid var(--teal);border-color:var(--teal)}
+.pcrow{display:grid;grid-template-columns:1fr 88px;gap:.5rem;align-items:end;margin:.2rem 0 .6rem}
+.pcrow input{width:100%}
+.row{display:flex;gap:.75rem}.row>div{flex:1}
+.toggles{display:flex;gap:1.2rem;margin-top:.9rem;flex-wrap:wrap}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:.15rem .6rem;margin-top:.25rem}
+.rgrid label{min-height:38px}
+.toggles label{display:flex;align-items:center;gap:.5rem;font-weight:500;margin:0;font-size:.875rem;min-height:38px;padding:.15rem 0}
+.toggles input{width:22px;height:22px;flex:none;accent-color:var(--teal)}
+/* nav */
+.nav{display:flex;gap:.6rem;margin-top:1rem}
+button{padding:.8rem 1.1rem;font-size:.95rem;font-weight:700;border-radius:8px;cursor:pointer;border:none}
+button.next{flex:1;color:#fff;background:var(--marine)}
+button.back{background:none;border:1.5px solid var(--line);color:var(--marine-soft)}
+button:disabled{opacity:.4;cursor:default}
+button:active:not(:disabled){transform:translateY(1px)}
+/* school cards (step 2) */
+.sc{border:1.5px solid var(--line);border-radius:10px;padding:.8rem .9rem;margin:.6rem 0;cursor:pointer;background:var(--card);transition:border-color .12s}
+.sc.sel{border-color:var(--teal);background:var(--teal-soft)}
+.sc .top{display:flex;justify-content:space-between;align-items:baseline}
+.sc .nm{font-weight:700;font-size:.95rem}
+.sc .ord{font-size:.7rem;font-weight:800;color:#fff;background:var(--teal);border-radius:10px;padding:.1em .55em;visibility:hidden}
+.sc.sel .ord{visibility:visible}
+.stats{display:flex;gap:.9rem;margin:.35rem 0 .15rem;flex-wrap:wrap}
+.stat{font-size:.7rem;color:var(--marine-soft)}
+.stat b{display:block;font-size:.95rem;color:var(--marine);font-variant-numeric:tabular-nums}
+.chips{margin-top:.3rem}
+.chip{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.02em;
+  padding:.15em .55em;border-radius:4px;margin:.15rem .25rem 0 0;background:#EDF1F3;color:var(--marine-soft)}
+.chip.sf{background:var(--teal-soft);color:var(--teal)}
+.chip.faith{background:var(--amber-soft);color:var(--amber)}
+.linky{background:none;border:none;color:var(--teal);font-weight:700;font-size:.8rem;text-decoration:underline;cursor:pointer;padding:0;margin-left:.4rem}
+#sticky{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:.5rem .7rem calc(.5rem + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.97);border-top:1px solid var(--line);box-shadow:0 -2px 12px rgba(14,42,56,.07)}
+.stk{display:flex;align-items:center;gap:.6rem;max-width:720px;margin:0 auto}
+.stkl{flex:1;display:flex;flex-wrap:wrap;gap:.25rem;font-size:.8rem;min-width:0}
+.stkn{background:var(--teal-soft);color:var(--teal);font-weight:700;border-radius:5px;padding:.15em .45em;white-space:nowrap}
+.stkn.empty{background:#EDF1F3;color:var(--marine-soft);font-weight:600}
+.stkr{flex:none;text-align:right;line-height:1.05}
+.stkp{display:block;font-size:.95rem;font-weight:800}
+.stkc{font-size:.7rem;color:var(--marine-soft)}
+.stk.safe .stkp{color:var(--teal)} .stk.warn .stkp{color:var(--amber)} .stk.risk .stkp{color:var(--risk)}
+.quickadd{display:flex;align-items:center;gap:.6rem;background:var(--teal-soft);border-radius:9px;padding:.6rem .7rem;margin:0 0 .6rem}
+.qbtn{flex:none;background:var(--teal);color:#fff;border:none;border-radius:7px;padding:.5rem .8rem;font-weight:700;font-size:.8rem;cursor:pointer;min-height:40px}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chipgrid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.35rem}
+.chipgrid.three{grid-template-columns:1fr 1fr 1fr}
+.chipgrid .pchip{margin:0;width:100%;text-align:center;justify-content:center;display:flex;align-items:center}
+.chipgrid .pchip:last-child:nth-child(odd){grid-column:1 / -1}
+.chipgrid span:empty{display:none}
+.pchip{display:inline-block;font-size:.8rem;font-weight:600;padding:.55em .9em;border-radius:18px;min-height:38px;line-height:1.5;
+  margin:.2rem .3rem .2rem 0;border:1.5px solid var(--line);background:var(--card);cursor:pointer;user-select:none}
+.pchip.on{border-color:var(--teal);background:var(--teal-soft);color:var(--teal)}
+/* results track */
+.track{position:relative;height:8px;background:#EDF1F3;border-radius:4px;margin:.45rem 0 .15rem}
+.track .med{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--line)}
+.track .dot{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:var(--marine);transform:translateX(-50%)}
+.track .gdot{position:absolute;top:-7px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid var(--teal);transform:translateX(-50%)}
+.tlab{display:flex;justify-content:space-between;font-size:.7rem;color:var(--marine-soft)}
+.p8b{display:inline-block;font-size:.7rem;font-weight:700;padding:.12em .5em;border-radius:4px;margin-left:.4rem;vertical-align:1px}
+.p8b.up{background:var(--teal-soft);color:var(--teal)}
+.p8b.mid{background:#EDF1F3;color:var(--marine-soft)}
+.p8b.dn{background:var(--amber-soft);color:var(--amber)}
+.rankline{font-size:.8rem;font-weight:600;margin-top:.4rem}
+.affstrip{font-size:.8rem;padding:.6rem .8rem;border-radius:8px;background:var(--amber-soft);margin:.6rem 0}
+.pw{display:flex;align-items:center;gap:4px;margin:5px 0;font-size:.7rem;font-weight:600}
+.pw .lbl{width:96px;flex:none;font-size:.7rem;text-align:right;padding-right:2px;color:var(--marine-soft)}
+.seg{flex:1;padding:.32em .3em;border-radius:4px;text-align:center;white-space:nowrap;overflow:hidden}
+.seg.st{background:var(--teal-soft);color:var(--teal)}
+.seg.pv{background:var(--amber-soft);color:var(--amber)}
+.seg.co{background:#E1E7EC;color:var(--marine)}
+.ruler{display:flex;gap:4px;margin:2px 0 8px;font-size:.7rem;color:var(--marine-soft)}
+.ruler .lbl{width:96px;flex:none}
+.ruler span{flex:1;text-align:center}
+.rsel{width:100%;padding:.65rem .5rem;font-size:.875rem;border:1.5px solid var(--line);border-radius:8px;background:var(--chalk)}
+.cmp select{width:100%;padding:.5rem;font-size:.875rem;border:1.5px solid var(--line);border-radius:8px;background:var(--chalk);margin-bottom:.4rem}
+.cmp td:nth-child(1){font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--marine-soft);width:26%}
+.cmp td{text-align:left !important;font-variant-numeric:normal}
+details.sec{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:.6rem 0;overflow:hidden}
+details.sec>summary{list-style:none;cursor:pointer;padding:.85rem 1.05rem;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--marine-soft);display:flex;justify-content:space-between;align-items:center}
+details.sec>summary::after{content:"+";font-size:1.05rem;color:var(--teal);font-weight:700}
+details.sec[open]>summary::after{content:"\2212"}
+details.sec>.inner{padding:0 1.05rem 1rem}
+details.sec .card{border:none;padding:0;margin:.4rem 0 0}
+.catchflag{font-size:.7rem;font-weight:700;color:var(--teal)}
+/* odds (step 3) */
+.catch{font-size:.95rem;padding:.75rem .85rem;border-radius:8px;background:var(--teal-soft);margin-bottom:.8rem}
+.catch.warn{background:var(--amber-soft)}
+.school{margin:.85rem 0}
+.school .nmr{display:flex;justify-content:space-between;font-size:.95rem;font-weight:600}
+.school .pct{font-variant-numeric:tabular-nums;color:var(--marine-soft);font-weight:500}
+.rail{position:relative;height:14px;background:#EDF1F3;border-radius:7px;margin:.32rem 0 .2rem;overflow:hidden}
+.rail .band{position:absolute;top:0;bottom:0;background:var(--teal);border-radius:7px;opacity:.85}
+.rail .band.mid{opacity:.55}.rail .band.low{background:var(--amber)}
+.note{font-size:.8rem;color:var(--marine-soft);line-height:1.45}
+.verdict{margin-top:1rem;padding:.85rem .95rem;border-radius:8px;font-size:.95rem;line-height:1.45}
+.verdict.safe{background:var(--teal-soft);border-left:4px solid var(--teal)}
+.verdict.warn{background:var(--amber-soft);border-left:4px solid var(--amber)}
+.verdict.bad{background:var(--risk-soft);border-left:4px solid var(--risk)}
+.verdict .vtail{display:block;font-size:.875rem;font-weight:400;margin-top:.15rem}
+.verdict b{display:block;margin-bottom:.2rem}
+/* step 4 */
+table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:.4rem}
+th{text-align:left;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--marine-soft);border-bottom:1.5px solid var(--marine);padding:.35rem .4rem}
+td{border-bottom:1px solid var(--line);padding:.5rem .4rem;font-variant-numeric:tabular-nums}
+td:nth-child(2),td:nth-child(3),th:nth-child(2),th:nth-child(3){text-align:right}
+.small{font-size:.8rem;color:var(--marine-soft);margin-top:.55rem;line-height:1.5}
+.hidden{display:none}
+footer{font-size:.7rem;color:var(--marine-soft);margin-top:1.6rem;line-height:1.5}
+#modal{display:none;position:fixed;inset:0;background:rgba(14,42,56,.45);z-index:50;align-items:flex-end;justify-content:center}
+#modal .sheetm{background:var(--chalk);width:100%;max-width:560px;max-height:86vh;overflow-y:auto;border-radius:14px 14px 0 0;padding:1.1rem 1.2rem 2rem;position:relative}
+#modal .x{position:absolute;top:.6rem;right:.8rem;font-size:1.3rem;color:var(--marine-soft);cursor:pointer;border:none;background:none;font-weight:700}
+</style>
+</head>
+<body>
+<div id="sticky" style="display:none"></div>
+<div id="modal" onclick="if(event.target.id==='modal')hideSchool()"><div class="sheetm"><button class="x" onclick="hideSchool()">×</button><div id="modalbody"></div></div></div>
+<div class="wrap">
+<header>
+  <div class="eyebrow" id="eyebrow">Sussex · Sept 2027 entry · pilot</div>
+  <h1>The School Chooser</h1>
+</header>
+<div class="steps"><div id="d0" class="on"></div><div id="d1"></div><div id="d2"></div><div id="d3"></div><div id="d4"></div><div id="d5"></div></div>
+
+<!-- STEP 0 -->
+<section id="s0">
+  <div class="steplabel">Step 1 of 6 — Where you live</div>
+  <div id="resume" class="catch" style="display:none;margin-bottom:.7rem"></div>
+  <div class="card" id="pcwrap">
+    <h2>Start with your postcode</h2>
+    <p class="sub">That's all we need to work out your council, your catchment and your real chances.</p>
+    <div class="pcrow">
+      <div class="pcmain"><label for="pc">Postcode</label><input id="pc" type="text" placeholder="BN1 6JJ" autocomplete="postal-code" autocapitalize="characters" onkeydown="if(event.key==='Enter')toStep1()"></div>
+      <div class="pcnum"><label for="hn">House no.</label><input id="hn" type="number" placeholder="opt."></div>
+    </div>
+    <div id="s0msg"></div>
+    <div class="nav"><button class="next" onclick="toStep1()">Find my catchment →</button></div>
+  </div>
+  <div class="card" id="foundwrap" style="display:none"></div>
+  <details class="sec"><summary>Where we cover</summary><div class="inner"><div id="districts"></div></div></details>
+</section>
+
+<!-- STEP 1 -->
+<section id="s1" class="hidden">
+  <div class="steplabel">Step 2 of 6 — Your child</div>
+  <div class="card" id="kentwrap" style="display:none">
+    <h2>The Kent Test</h2>
+    <p class="sub">Kent is selective. The only way into a grammar is a Kent Test pass — your address doesn't affect eligibility. The test covers <b>Kent grammars only</b>: Medway and Bexley run their own separate tests.</p>
+    <div class="chipgrid" id="kentchips"></div>
+    <p class="note" id="kentnote" style="margin-top:.5rem"></p>
+  </div>
+  <div class="card" id="gatewrap">
+    <h2>Could you pay fees?</h2>
+    <p class="sub">This changes what we show you, so it's worth answering now. There's no wrong answer, and you can change it later.</p>
+    <div class="chipgrid" id="gatechips"></div>
+    <p class="note" id="gatenote" style="margin-top:.5rem"></p>
+  </div>
+  <div class="card">
+    <h2>Your child</h2>
+    <p class="sub">All optional except the school year.</p>
+    <div class="toggles">
+      <label><input id="fsm" type="checkbox"> Eligible for free school meals</label>
+      <label><input id="sib" type="checkbox"> Sibling at the school in Sept 2027</label>
+      <label><input id="ehcp" type="checkbox"> Has an EHCP (or one is being sought)</label>
+    </div>
+    <label for="prim" style="margin-top:1rem">Which primary school? <span style="font-weight:400;color:var(--marine-soft)">(optional — shows where their cohort typically heads)</span></label>
+    <select id="prim" style="width:100%;padding:.6rem .7rem;font-size:.95rem;border:1.5px solid var(--line);border-radius:8px;background:var(--chalk)"><option value="">— skip —</option></select>
+    <label style="margin-top:1rem">What school year are they in from this September (2026)?</label>
+    <div class="toggles rgrid" style="margin-top:.2rem">
+      <label><input type="radio" name="yr" value="y6" checked> Year 6</label>
+      <label><input type="radio" name="yr" value="y5"> Year 5</label>
+      <label><input type="radio" name="yr" value="y4-"> Year 4 or under</label>
+      <label><input type="radio" name="yr" value="sec"> Already at secondary</label>
+    </div>
+    <label style="margin-top:1rem">Faith status <span style="font-weight:400;color:var(--marine-soft)">(only affects Cardinal Newman &amp; King's)</span></label>
+    <div class="toggles" style="margin-top:.2rem">
+      <label><input type="radio" name="faith" value="catholic"> Baptised Catholic</label>
+      <label><input type="radio" name="faith" value="christian"> Practising Christian / other faith (minister could confirm)</label>
+      <label><input type="radio" name="faith" value="none" checked> Neither</label>
+    </div>
+    <label style="margin-top:1rem">Your child is a…</label>
+    <div class="toggles rgrid" style="margin-top:.2rem">
+      <label><input type="radio" name="sex" value="girl"> Girl</label>
+      <label><input type="radio" name="sex" value="boy"> Boy</label>
+      <label style="grid-column:1 / -1"><input type="radio" name="sex" value="na" checked> Rather not say</label>
+    </div>
+    <p class="small" style="margin-top:.35rem">Brighton's state schools are all mixed, so this doesn't change those odds. It matters in Horsham, where the two main schools are single-sex, and for the girls-only independents.</p>
+    <div id="s1msg"></div>
+  </div>
+  <details class="sec" id="fitfold" open>
+    <summary>What suits them? — five optional questions</summary>
+    <div class="inner">
+      <p class="sub">Answer any of these and every school, free or fee-paying, carries a fit score wherever it appears. Skip the lot if you'd rather just see the options.</p>
+      <div id="fitqs"></div>
+    </div>
+  </details>
+  <div class="nav"><button class="back" onclick="go(0)">← Postcode</button><button class="next" onclick="toStep2()">See my options →</button></div>
+</section>
+
+<!-- STEP 2 -->
+<section id="s2" class="hidden">
+  <div class="steplabel">Step 3 of 6 — Compare &amp; choose (tap in preference order)</div>
+  <div class="card" style="padding:.9rem 1rem">
+    <div id="geomap"></div>
+  </div>
+  <div id="catch2"></div>
+  <div class="card" style="padding:.85rem .95rem">
+    <h2 style="font-size:.95rem;margin-bottom:.15rem">Want a recommendation?</h2>
+    <p class="sub" style="margin-bottom:.5rem">Tell us what matters most (pick up to 3) and we'll build you a list — which you can then edit.</p>
+    <div id="prios" class="chips" style="margin-bottom:.6rem"></div>
+    <button class="next" style="width:100%;padding:.65rem" onclick="recommend()">Recommend a list for me</button>
+    <div id="reco"></div>
+  </div>
+  <div id="cards"></div>
+  <div id="affstrip" class="affstrip" style="display:none"></div>
+  <div class="card" id="fitsec">
+    <h2>Fits you × can you get in</h2>
+    <p class="sub" id="fitquadsub">Every school on the two questions that decide this step. Bold ring = on your list. Tap any dot.</p>
+    <div id="fitmap"></div>
+    <div id="fitout" style="display:none"></div>
+    <details class="sec"><summary>Dig deeper — compare, and who actually attends</summary><div class="inner">
+      <div id="digcmp"><div id="rad2wrap" style="display:none">
+    <h2>Compare any two</h2>
+    <p class="sub" style="margin-bottom:.4rem">Two free schools → six official measures against the area average. Bring in a fee-paying school → the comparison switches to what's genuinely comparable.</p>
+    <div style="display:flex;gap:.5rem;margin-bottom:.3rem">
+      <select id="rad2A" onchange="anyCompare(this.value,document.getElementById('rad2B').value,'radout2')" style="flex:1;min-width:0;padding:.45rem;font-size:.875rem;border:1.5px solid var(--line);border-radius:8px;background:var(--chalk)"></select>
+      <select id="rad2B" onchange="anyCompare(document.getElementById('rad2A').value,this.value,'radout2')" style="flex:1;min-width:0;padding:.45rem;font-size:.875rem;border:1.5px solid var(--line);border-radius:8px;background:var(--chalk)"></select>
+    </div>
+    <div id="radout2"></div>
+  </div>
+</div>
+      <div id="fitalt"></div>
+    </div></details>
+  </div>
+
+
+  <p class="small" id="srcnote"></p>
+  <p class="small" id="geonote"></p>
+  <p class="small">All results are from the DfE's official 2023-24 performance tables (final) — the most recent year with progress scores; no KS2 baseline exists to calculate Progress 8 for 2025 or 2026 cohorts. Ofsted stopped single overall grades in 2024; labels show the last graded judgement or new report-card status. Walk times are straight-line estimates from your postcode area at a child's pace — check a maps app for real routes and buses. Character notes are starting points — nothing replaces an open evening.</p>
+  <p class="small" id="gencaveat"></p>
+  <div class="nav">
+    <button class="back" onclick="go(1)">← Back</button>
+    <button id="n2" class="next" onclick="toStep3()" disabled>See my odds →</button>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section id="s3" class="hidden">
+  <div class="steplabel">Step 4 of 6 — Your odds</div>
+  <div class="card">
+    <div id="verdict"></div>
+    <div id="catch3" style="margin-top:.8rem"></div>
+    <div id="schools"></div>
+  </div>
+  <div class="nav">
+    <button class="back" onclick="go(2)">← Change list</button>
+    <button class="next" onclick="go(4)">What happens at 16 →</button>
+  </div>
+</section>
+
+<!-- STEP 4 -->
+<section id="s4" class="hidden">
+  <div class="steplabel">Step 5 of 6 — At 16: the second gate</div>
+  <div class="card" id="pic16"></div>
+  <div class="card">
+    <h2>The colleges themselves</h2>
+    <p class="sub">Brighton is an 11-16 town. Most state secondaries end at 16; post-16 runs through two colleges — and they are genuinely good, which is why so many pathways converge there.</p>
+    <div class="sc" style="cursor:default"><div class="top"><span class="nm">BHASVIC</span><span class="chip sf">OFSTED OUTSTANDING</span></div>
+      <div class="note" style="margin-top:.25rem">Outstanding in <b>all areas</b> (Dec 2022) — a decade continuously Outstanding — and on recent results the <b>top-performing non-selective sixth form college in England</b>. This is the free option most roads lead to; it would be a destination school in any city.</div></div>
+    <div class="sc" style="cursor:default"><div class="top"><span class="nm">Varndean College</span><span class="chip sf">OFSTED GOOD</span></div>
+      <div class="note" style="margin-top:.25rem">Good (Mar 2024) with <b>Outstanding</b> for behaviour, personal development and high-needs provision. 2025 A-levels: ~50% A*–B, ~98% pass. The area's only <b>International Baccalaureate</b> provider (avg score ~34) — a genuine differentiator, and typically the broader entry profile of the two.</div></div>
+    <p class="small">① One college application, not two (the Accord). ② Priority deadline: <b>first Friday in December</b> of Year 11. ③ Every B&amp;H postcode is top priority — at 16 the gate is <b>grades and deadlines, not address</b>.</p>
+    <p class="small" id="ehcp16"></p>
+  </div>
+  <div class="nav">
+    <button class="back" onclick="go(3)">← Your odds</button>
+    <button class="next" onclick="go(5)">Fees &amp; alternatives →</button>
+  </div>
+</section>
+
+<!-- STEP 5 -->
+<section id="s5" class="hidden">
+  <div class="steplabel" id="step6label">Step 6 of 6 — Fee-paying options (optional)</div>
+  <div class="card">
+    <h2 id="gateEcho">Fee-paying options</h2>
+    <p class="sub">You told us at the start — change it here if that's shifted.</p>
+    <div class="toggles rgrid" style="margin-top:.3rem">
+      <label><input type="radio" name="pgate" value="no" onclick="feeGate='no';drawGate()" onchange="renderFin()"> No — state only</label>
+      <label><input type="radio" name="pgate" value="maybe" onclick="feeGate='maybe';drawGate()" checked onchange="renderFin()"> Maybe</label>
+      <label><input type="radio" name="pgate" value="yes" onclick="feeGate='yes';drawGate()" onchange="renderFin()"> Yes, seriously</label>
+    </div>
+  </div>
+  <div class="card" id="budwrap" style="display:none">
+    <label for="bud" style="margin-top:0">Roughly what could you spend on fees per year, if anything? <span style="font-weight:400;color:var(--marine-soft)">(optional — adds affordability flags)</span></label>
+    <input id="bud" type="number" placeholder="e.g. 15000" min="0" step="1000" onchange="budget=this.value?parseInt(this.value):null;renderFin()">
+    <label style="margin-top:.7rem">How many children might take this route?</label>
+    <div class="toggles" style="margin-top:.2rem">
+      <label><input type="radio" name="nk" value="1" checked onchange="nkids=1;renderFin()"> One</label>
+      <label><input type="radio" name="nk" value="2" onchange="nkids=2;renderFin()"> Two</label>
+      <label><input type="radio" name="nk" value="3" onchange="nkids=3;renderFin()"> Three</label>
+    </div>
+  </div>
+  <div id="finflow"></div>
+  <div class="nav"><button class="back" onclick="go(4)">← At 16</button><button class="next" onclick="sharePlan()">Share my plan</button></div>
+  <div id="shareout"></div>
+  <footer>Pilot build. Probabilities from DfE school-level applications &amp; offers data (2014–2026) and B&amp;H's published 2026-27 arrangements — one year under the new rules, hence ranges. Cardinal Newman, King's, BACA and PACA set their own criteria; their figures are base rates only. Verify catchment with the council (01273 293653) before the 31 October deadline. This tool estimates; it doesn't decide.</footer>
+</section>
+</div>
+
+<script>
+/* ---------- school data: identity + quality (2024 = last year with P8) ---------- */
+let S={};
+
+
+/* PANs below are the determined 2026/27 figures AFTER the Schools Adjudicator's decision of
+   20 October 2025 (ADA4423, ADA4452-4, ADA4456, ADA4458), which partially upheld objections
+   and required Blatchington Mill and Dorothy Stringer to remain at 330, not the 300 the
+   council had determined. Longhill's reduction to 210 was not disturbed. */
+const OBS={varndean:{p1:350,o1:254,off:279,pan:300},stringer:{p1:290,o1:253,off:319,pan:330},
+ blatchmill:{p1:252,o1:237,off:323,pan:330},hovepark:{p1:92,o1:92,off:135,pan:180},
+ patcham:{p1:145,o1:145,off:198,pan:225},longhill:{p1:70,o1:70,off:93,pan:210},
+ paca:{p1:150,o1:150,off:172,pan:180},baca:{p1:113,o1:113,off:134,pan:180},
+ kings:{p1:212,o1:157,off:171,pan:180},cardinalnewman:{p1:484,o1:338,off:346,pan:348}};
+const PAIRS={dsv:["stringer","varndean"],bmhp:["blatchmill","hovepark"]};
+const SINGLES={patcham:["patcham"],longhill:["longhill"],paca:["paca"],baca:["baca"]};
+const OWN=new Set(["kings","cardinalnewman"]);
+let CNAMES={};
+let RINGSINGLES={};
+
+/* ---------- catchment resolver ---------- */
+const DSV_U=new Set(["BN13TG","BN13TL","BN13TS","BN13TT","BN13TU","BN13TF","BN13TX","BN13TH","BN13UG","BN15JS","BN16XZ","BN15JB","BN15JF","BN15JG","BN15JL","BN15JN","BN15LA","BN15LB","BN15LD","BN15LE","BN15LR","BN15LS","BN15LW","BN25DT","BN25ET","BN25RS","BN25ZG","BN25ZJ"]);
+const PAT_U=new Set(["BN15AZ","BN15BQ","BN15JH","BN15JJ","BN15JP","BN15JX","BN19BA","BN19HT","BN19HU","BN19JS","BN19QB","BN19TN"]);
+const BACA_U=new Set(["BN19HW","BN19HX","BN19HY"]);
+const LON_U=new Set(["BN25FA","BN25FB","BN25FG","BN25GG","BN25GH","BN25GJ","BN25HA","BN25LJ","BN25NA","BN25NB","BN25NS"]);
+/* A UK postcode is outward + inward: 1-2 letters, 1-2 digits, optional letter, then digit + 2 letters.
+   We validate the SHAPE here and let the manifest decide whether we cover it — so a new county
+   is a data change, never a regex change. */
+const UKPC=/^([A-Z]{1,2}\d[A-Z\d]?)\s*(\d)([A-Z]{2})$/;
+function validPostcode(pcRaw){return UKPC.test(String(pcRaw||"").toUpperCase().replace(/\s+/g,""));}
+function resolve(pcRaw,n){
+  const pc=pcRaw.toUpperCase().replace(/\s+/g,"");
+  const m=pc.match(UKPC);
+  if(!m){
+    // distinguish "not a postcode" from "a postcode we don't cover" — different problems, different fixes
+    return["unknown",/^[A-Z]{1,2}\d/.test(pc)
+      ?"That looks like a partial postcode \u2014 we need the full one (e.g. BN1 6JJ)."
+      :"That doesn't look like a postcode. Enter it as it appears on your post, e.g. BN1 6JJ."];}
+  const oc=m[1];
+  if(MAN&&MAN.outcodes&&!MAN.outcodes[oc])
+    return["unknown",`We don't cover <b>${oc}</b> yet \u2014 see \u201cWhere we cover\u201d below for the areas we do.`];
+  const out=m[1],sec=m[2],unit=m[3]||"",full=unit.length===2?out+sec+unit:null,u1=unit[0]||"";
+  const num=n?parseInt(n):null;
+  if(full){
+    if(full==="BN15JD"||full==="BN15JE")return num==null?["ambiguous","Tongdean Lane: odd → Stringer/Varndean, even → Patcham. Add your house number."]:(num%2?["dsv","Tongdean Lane, odd"]:["patcham","Tongdean Lane, even"]);
+    if(full==="BN25DZ"||full==="BN25EF")return num==null?["ambiguous","Manor Way: even 2–34 → Stringer/Varndean, others → Longhill. Add your house number."]:((num%2===0&&num<=34)?["dsv","Manor Way even 2–34"]:["longhill","Manor Way"]);
+    if(full==="BN25EH"||full==="BN25EL")return num==null?["ambiguous","Manor Hill: odd → Longhill, even → Stringer/Varndean. Add your house number."]:(num%2?["longhill","Manor Hill odd"]:["dsv","Manor Hill even"]);
+    if(full==="BN25PA")return num==null?["ambiguous","Wilson Avenue west: 1–11 → Longhill, 13+ → Stringer/Varndean. Add your house number."]:(num<=11?["longhill","Wilson Ave 1–11"]:["dsv","Wilson Ave 13+"]);
+    if(full==="BN25PB")return["longhill","Wilson Avenue, east side"];
+    if(DSV_U.has(full))return["dsv","listed address"];
+    if(PAT_U.has(full))return["patcham","listed address"];
+    if(BACA_U.has(full))return["baca","listed address"];
+    if(LON_U.has(full))return["longhill","listed address"];}
+  if(out==="BN3")return["bmhp","BN3"];
+  if(out==="BN41")return full==="BN411PH"?["ambiguous","Part of BN41 1PH is split — phone admissions (01273 293653)"]:["paca","BN41"];
+  if(out==="BN1"){
+    if(sec==="2")return["bmhp","BN1 2"];
+    if(sec==="3")return["bmhp","BN1 3 (unless a listed exception)"];
+    if("1467".includes(sec))return["dsv","BN1 "+sec];
+    if(sec==="8")return["patcham","BN1 8"];
+    if(sec==="5"){
+      if("EFGH".includes(u1))return["patcham","BN1 5"+u1];
+      if(u1==="L")return["patcham","BN1 5L (unless listed exception)"];
+      if("ABDNPRST".includes(u1))return["dsv","BN1 5"+u1];
+      if(u1==="J")return["ambiguous","BN1 5J is split street by street — full postcode and house number needed"];
+      return["ambiguous","BN1 5 — enter your full postcode"];}
+    if(sec==="9"){
+      if("PRS".includes(u1))return["baca","BN1 9"+u1];
+      if(u1==="Q")return["baca","BN1 9Q"];
+      if(u1==="J")return["baca","BN1 9J"];
+      if("ADEG".includes(u1))return["patcham","BN1 9"+u1];
+      if("BXYZ".includes(u1))return["patcham","BN1 9"+u1];
+      return["ambiguous","BN1 9 — enter your full postcode"];}}
+  if(out==="BN2"){
+    if(sec==="4")return["baca","BN2 4"];
+    if(sec==="3"||sec==="9")return["dsv","BN2 "+sec];
+    if(sec==="0")return u1==="Y"?["longhill","BN2 0Y"]:["dsv","BN2 0"];
+    if("1678".includes(sec))return["longhill","BN2 "+sec];
+    if(sec==="5"){
+      if(!unit||unit.length<2)return["ambiguous","BN2 5 is split between Longhill and Stringer/Varndean by individual postcode \u2014 enter your full postcode"];
+      const a=unit[0],b=unit[1],u=a+b;
+      /* Determined arrangements 2026/27 (unchanged for 2027/28): the Whitehawk area moved
+         from Longhill into Stringer/Varndean, and Kemptown/Bristol Estate moved the other way. */
+      const DSV5=(u==="DT")||(u==="ET")
+        ||(a==="F"&&!"ABG".includes(b))||(a==="G"&&!"GHJ".includes(b))
+        ||(a==="H"&&b!=="A")||(a==="L"&&b!=="J")||(a==="N"&&!"ABS".includes(b))
+        ||(a==="P"&&!"AB".includes(b))||(a==="Q")||(u==="RS")
+        ||(a==="T"&&"ABDEFGHJWX".includes(b))||(u==="UB")||(u==="ZG")||(u==="ZJ");
+      const LON5=(a==="A")||(a==="B")||(a==="D"&&b!=="T")||(a==="E"&&b!=="T")
+        ||(u==="FA")||(u==="FB")||(u==="FG")||(u==="GG")||(u==="GH")||(u==="GJ")
+        ||(u==="HA")||(a==="J")||(u==="LJ")||(a==="N"&&"ABS".includes(b))
+        ||(a==="R"&&b!=="S")||(a==="S")||(a==="T"&&"NPQRS".includes(b))
+        ||(a==="U"&&b!=="B")||(a==="W")||(a==="X")||(a==="Y")||(a==="Z"&&!"GJ".includes(b));
+      /* the council lists a handful of units as split within themselves ("some of") */
+      if(("DZ EF EH EL PA PB".split(" ")).includes(u))return["ambiguous","BN2 5"+u+" is split by house number \u2014 add your house number"];
+      if(DSV5)return["dsv","BN2 5"+u];
+      if(LON5)return["longhill","BN2 5"+u];
+      return["ambiguous","BN2 5"+u+" \u2014 we can't place this unit confidently; check with the council on 01273 293653"];}}
+  if(out==="BN7"||out==="BN8")return["lewes","Lewes community area (East Sussex — ring coverage, beta"+(out==="BN8"?"; rural BN8 addresses: check ESCC's community-area map":"")+")"];
+  if(out==="BN9")return["newhaven","Newhaven community area (East Sussex — ring coverage, beta)"];
+  if(out==="BN10")return["peacehaven","Peacehaven community area (East Sussex — ring coverage, beta)"];
+  if(out==="BN5")return["steyning-a","Henfield \u2014 Steyning Grammar's area (West Sussex \u2014 beta)"];
+  if(out==="BN42")return["adurshore","Southwick (West Sussex \u2014 beta)"];
+  if(out==="BN45")return["mid-hass","Poynings & the Downs villages (West Sussex \u2014 beta)"];
+  if(out==="BN24")return["eb-east","Pevensey Bay (East Sussex \u2014 beta)"];
+  if(out==="BN26")return["eb-west","Polegate & Willingdon (East Sussex \u2014 beta)"];
+  if(out==="PO20")return["selsey","Selsey & the Witterings (West Sussex \u2014 beta)"];
+  if(out==="GU28")return["midhurst-a","Petworth \u2014 Midhurst Rother's area (West Sussex \u2014 beta)"];
+  if(out==="RH14")return["horsham","Billingshurst \u2014 The Weald's area (West Sussex \u2014 beta)"];
+  if(out==="RH20")return["steyning-a","Pulborough & Storrington \u2014 Steyning Grammar's area (West Sussex \u2014 beta)"];
+  if(out==="TN5")return["wadhurst","Wadhurst \u2014 Uplands Academy's area (East Sussex \u2014 beta)"];
+  if(out==="TN19")return["battle","Etchingham \u2014 Robertsbridge's area (East Sussex \u2014 beta)"];
+  if(out==="TN20")return["crowborough","Mayfield (East Sussex \u2014 beta)"];
+  if(out==="RH1"||out==="RH2")return["reigate","Reigate & Redhill (Surrey \u2014 beta)"];
+  if(out==="RH6")return["horley","Horley & Salfords (Surrey \u2014 beta)"];
+  if(out==="RH18"||out==="RH19")return["eastgrinstead","East Grinstead (West Sussex \u2014 beta)"];
+  if(["TN1","TN2","TN3","TN4"].includes(out))return["tw","Tunbridge Wells (Kent \u2014 selective area, beta)"];
+  if(["TN9","TN10","TN11","TN12"].includes(out))return["tonbridge","Tonbridge (Kent \u2014 selective area, beta)"];
+  if(out==="TN34"||out==="TN35"||out==="TN37"||out==="TN38")return["hast-town","Hastings & St Leonards (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="TN39"||out==="TN40")return["bexhill","Bexhill-on-Sea (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="TN31"||out==="TN36")return["rye","Rye & the marsh villages (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="TN32"||out==="TN33")return["battle","Battle & Robertsbridge (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="TN6")return["crowborough","Crowborough (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="TN22")return["uckfield-a","Uckfield & district (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="TN21")return["heathfield-a","Heathfield & district (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="BN27")return["hailsham-a","Hailsham (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="BN20"||out==="BN21")return["eb-west","Eastbourne \u2014 Old Town, Meads & Willingdon (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="BN22"||out==="BN23"||out==="BN24")return["eb-east","Eastbourne \u2014 Hampden Park, Langney & Sovereign Harbour (East Sussex \u2014 ring coverage, beta)"];
+  if(out==="BN25")return["seaford","Seaford community area (East Sussex — ring coverage, beta)"];
+  if(out==="BN43")return["adurshore","Shoreham-by-Sea (West Sussex — ring coverage, beta); Shoreham Academy's area, with SRWA's catchment reaching West Shoreham"];
+  if(out==="BN15")return["adurlan","Lancing/Sompting (West Sussex — ring coverage, beta); Sir Robert Woodard's catchment"];
+  if(out==="PO19"||out==="PO18"||out==="PO20")return["chichester-a","Chichester & the western villages (West Sussex \u2014 ring coverage, beta)"];
+  if(out==="PO21"||out==="PO22")return["bognor","Bognor Regis, Felpham & Barnham (West Sussex \u2014 ring coverage, beta)"];
+  if(out==="BN16"||out==="BN17"||out==="BN18")return["littlehampton-a","Littlehampton, Angmering & Arundel (West Sussex \u2014 ring coverage, beta)"];
+  if(out==="GU29")return["midhurst-a","Midhurst & the northern Downs (West Sussex \u2014 ring coverage, beta)"];
+  if(out==="BN44")return["steyning-a","Steyning & the Adur villages (West Sussex \u2014 ring coverage, beta)"];
+  if(out==="RH10"||out==="RH11")return["crawley-town","Crawley (West Sussex \u2014 ring coverage, beta)"];
+  if(out==="RH12"||out==="RH13")return["horsham-fm","Horsham (West Sussex \u2014 the town is split between two catchments; see the note)"];
+  if(out==="RH15")return["mid-bh","Burgess Hill (West Sussex \u2014 ring coverage, beta)"];
+  if(out==="RH16"||out==="RH17")return["mid-hh","Haywards Heath / Lindfield / Cuckfield (West Sussex \u2014 ring coverage, beta)"];
+  if(out==="BN6")return["mid-hass","Hassocks, Hurstpierpoint & Ditchling (West Sussex \u2014 ring coverage, beta)"];
+  if(out==="BN11"||out==="BN12"||out==="BN13"||out==="BN14")return["worthing","Worthing (West Sussex — early beta: Durrington modelled; Davison girls / St Andrew's boys not yet)"];
+  /* Everything past the bespoke rules above resolves from the manifest's outcode map, which is the
+     single source of truth. Hardcoded outcode tables drifted out of step with the data twice. */
+  if(MAN&&MAN.outcodes&&MAN.outcodes[out]){
+    const dk=MAN.outcodes[out], d=MAN.districts[dk];
+    const ck=(MAN.areaOutcodes&&MAN.areaOutcodes[out])||dk;   // sub-area where the district has several
+    if(d)return[ck,d.name+" \u2014 "+d.auth.replace(" County Council","").replace(" City Council","")+" (beta)"];
+  }
+  return["unknown","Not in the B&H secondary catchment lists — out of area"];
+}
+function statusFor(k,ck){
+  if(RINGSINGLES[ck])return RINGSINGLES[ck].includes(k)?"ring-in":"ring-other";
+  if(S[k]&&S[k].la==="es")return"ring-out";
+  if(PAIRS[ck]&&PAIRS[ck].includes(k))return"dual";
+  if(SINGLES[ck]&&SINGLES[ck].includes(k))return"in";
+  if(SINGLES[ck])return"single-other";
+  return"out";}
+function pOffer(k,st,fsm,sib){
+  // where we hold the council's real 2026 offer rate, that beats any modelled interval
+  // a published rate is a citywide average over all applicants; where we hold an address-specific
+  // catchment model that model is the better answer, and the rate becomes supporting context
+  if(S[k]&&S[k].r1!=null&&!(district&&DISTRICTS[district]&&DISTRICTS[district].modelled)){
+    const r=S[k].r1, band=[Math.max(.03,r-.12),Math.min(.99,r+.12)];
+    if(S[k].sel&&kentTest==="no")return[[0,0],"No Kent Test, no grammar place \u2014 selection is the whole gate"];
+    const yr=S[k].ryr?`${S[k].ryr.slice(0,4)}\u2013${S[k].ryr.slice(4)}`:"the latest";
+    return[band,`In the <b>${yr}</b> round <b>${Math.round(r*100)}%</b> of families who put it first were offered a place${S[k].sel?" \u2014 conditional on a Kent Test pass":""}`];}
+  /* Any authority we hold without a bespoke modelled route falls through to here rather than
+     off the end of the function — returning undefined silently broke ranking when Hampshire arrived. */
+  if(S[k]&&S[k].la&&!["ws","es","bh"].includes(S[k].la))
+    return[[.55,.90],"Allocated by this school's own criteria \u2014 usually distance from home; we don't hold a modelled route for this area yet"];
+  if(S[k]&&S[k].la==="ws"){
+    if(st==="ring-in"){
+      if(k==="shorehamac")return[[.60,.90],"In Shoreham Academy's area — Outstanding and heavily demanded, places by catchment then distance; proximity decides the margin"];
+      if(k==="srwa")return[[.75,.95],"In SRWA's catchment (Lancing/Sompting/West Shoreham) — demand rising but in-catchment has historically been safe"];
+      if(S[k]&&S[k].nocatch&&!S[k].faith&&!["bohunthorsham","bohuntworthing","chifree","gatwick"].includes(k))
+        return[[.45,.80],"This school sets its own criteria and uses no council catchment area \u2014 where you live counts only as distance"];
+      if(k==="bishopluffa"||k==="stphiliphoward")return faithSt!=="none"?[[.72,.94],"Faith application at a church school that ranks faith categories first \u2014 these are the strongest results in the district"]:
+        [[.12,.40],"No faith criterion met \u2014 both district faith schools fill largely on faith criteria, and the open category is reached only in some years"];
+      if(k==="steyning"||k==="midhurst")return[[.75,.95],"In catchment at a school serving a wide rural area \u2014 in-catchment has historically been safe"];
+      if(["chihigh","chifree","regis","felpham","littlehampton","angmering","bourne","sixvillages"].includes(k))return[[.85,.98],"In catchment \u2014 these schools have had places in most recent years"];
+      if(k==="royalalex")return[[.30,.70],"State boarding \u2014 boarding places go by assessment and need, day places by distance; a route most families never look at"];
+      if(k==="stbedes")return faithSt!=="none"?[[.65,.90],"Faith application at the joint Anglican-Catholic school \u2014 the strongest results in the district and heavily oversubscribed"]:
+        [[.20,.55],"No faith criterion met at a school that fills largely on faith criteria"];
+      if(["reigatesch","therfield","merstham","oakwood","destafford"].includes(k))return[[.80,.96],"Surrey catchment then distance \u2014 places most years"];
+      if(k==="stoscar")return faithSt==="catholic"?[[.75,.95],"Catholic application at the strongest progress score in West Sussex"]:[[.30,.65],"Open category at a Catholic school \u2014 behind the faith criteria"];
+      if(k==="davison"||k==="standrews")return faithSt!=="none"?[[.70,.92],"Faith application at a Church of England school"]:[[.35,.70],"No faith criterion met \u2014 the open category is usually reached here"];
+      if(["worthinghigh","bohuntworthing","selsey"].includes(k))return[[.82,.97],"In catchment \u2014 places most years"];
+      if(["sackville","imberhorne"].includes(k))return[[.80,.96],"In catchment in East Grinstead \u2014 both have had places most years"];
+      if(S[k]&&S[k].sel)return kentTest==="no"?[[0,0],"No Kent Test, no grammar place \u2014 selection is the whole gate here"]:
+        [[.35,.75],`Conditional on a Kent Test pass \u2014 with a pass, distance decides among qualified children${kentTest==="undecided"?"; register by early July":""}`];
+      if(k==="bennett")return faithSt!=="none"?[[.55,.85],"Faith application at the strongest non-selective school in the district \u2014 heavily oversubscribed"]:
+        [[.15,.45],"No faith criterion met at a school that fills on faith and distance"];
+      if(k==="stgregorys")return faithSt==="catholic"?[[.75,.95],"Catholic application \u2014 faith criteria rank first"]:[[.45,.80],"Open category at a Catholic school with places most years"];
+      if(["hillview","skinnersacad","hughchristie","leightonbridge"].includes(k))return[[.85,.98],"Non-selective and distance-allocated \u2014 places most years"];
+      if(k==="millais"||k==="forest")return[[.70,.92],"In catchment for Horsham's single-sex pair \u2014 WSCC allocates by catchment then distance; both fill most years"];
+      if(k==="tanbridge"||k==="weald")return[[.68,.90],"In catchment \u2014 heavily demanded, so proximity decides the margin"];
+      if(k==="stwilfrids"||k==="holytrinity")return faithSt!=="none"?[[.70,.93],"Faith application at a church school \u2014 the faith categories rank first"]:
+        [[.25,.60],"No faith criterion met \u2014 you sit behind the faith categories, though these schools do reach the open group most years"];
+      if(k==="gatwick")return[[.35,.70],"The Gatwick School is 4-16 \u2014 its own primary pupils transfer up first, so external Year 7 places are limited"];
+      if(k==="thomasbennett"||k==="ifield")return[[.85,.98],"In catchment at a school with places most years \u2014 comfortable"];
+      if(k==="hazelwick"||k==="oriel")return[[.72,.94],"In catchment in Crawley \u2014 both are popular, allocated by catchment then distance"];
+      if(k==="stpauls")return faithSt==="catholic"?[[.75,.95],"Baptised Catholic at an Outstanding Catholic 11-18 school — the faith categories come first and usually clear"]:
+        faithSt==="christian"?[[.25,.60],"Other-faith category at St Paul's — behind the Catholic categories, and it draws from all of Mid Sussex"]:
+        [[.08,.30],"No faith criterion met — St Paul's fills largely on Catholic criteria; the open category is reached only in some years"];
+      if(k==="oathall"||k==="wardenpark")return[[.72,.94],"In catchment for one of the two Haywards Heath-area schools — WSCC allocates by catchment then distance; both are consistently full"];
+      if(k==="downlands")return[[.75,.95],"In Downlands' catchment (Hassocks, Hurstpierpoint, Ditchling and the villages) — in-catchment has historically been safe"];
+      if(k==="burgesshill")return[[.85,.98],"In catchment in Burgess Hill — historically comfortable"];
+      return[[.70,.95],"In this school's Worthing area — WSCC allocates by catchment then distance"];}
+    if(st==="ring-other")return[[.15,.55],"Different WSCC catchment — distance-allocated after in-area families"];
+    return[[.03,.25],"Cross-boundary into West Sussex — after in-area families, by distance; Shoreham Academy especially rarely reaches outside its area"];}
+  if(S[k]&&S[k].la==="es"){
+    // ESCC: no lottery — community area, then distance. Coordinated on the same national form & 31 Oct deadline.
+    if(st==="ring-in"){
+      if(k==="priory")return[[.55,.85],"In Priory's community area — oversubscribed (~2.1 applications per place), places by area then distance; the closer to the school, the safer"];
+      if(k==="strichards")return faithSt==="catholic"?[[.80,.96],"Baptised Catholic at St Richard's \u2014 the faith categories come first and it is the most demanded school in the east"]:
+        faithSt==="christian"?[[.25,.60],"Other-faith category at St Richard's \u2014 behind the Catholic categories at a heavily oversubscribed school"]:
+        [[.06,.25],"No faith criterion met \u2014 St Richard's fills on Catholic criteria in most years"];
+      if(k==="claverham"||k==="beacon"||k==="chailey")return[[.62,.88],"In the community area of a school that is oversubscribed most years \u2014 distance decides the margin"];
+      if(["hastingsac","stleonards","arkalexandra","ryecollege","hailsham"].includes(k))return[[.88,1],"In the community area of a school with places most years \u2014 near-certain"];
+      if(k==="stcatherines")return faithSt!=="none"?[[.70,.92],"Church of England college — a supported faith application sits in the priority categories"]:
+        [[.45,.80],"St Catherine's takes a substantial non-faith intake by distance, but faith applicants rank ahead of you"];
+      if(k==="gildredge")return[[.35,.70],"Gildredge House is 4-16 — its own primary pupils transfer up first, so external Year 7 places are limited and go by distance"];
+      if(k==="cavendish")return[[.60,.88],"In Cavendish's community area — one of the town's more demanded schools, so proximity decides the margin"];
+      if(["ratton","willingdon","eastbourneac","turing"].includes(k))return[[.80,.96],"In this school's Eastbourne community area — historically comfortable for in-area families"];
+      return[[.88,1],"In the community area of a school that historically has places — near-certain"];}
+    if(st==="ring-other")return[[.15,.55],"Different ESCC community area — distance-allocated after in-area families; depends how full the year is"];
+    return[[.02,.25],"Cross-boundary application from B&H — considered after ESCC in-area families, by distance"];}
+  if(st==="ring-in"||st==="ring-other"){
+    // ESCC-resident family applying to a B&H school: cross-boundary, no catchment priority
+    if(fsm)return[[.30,.70],"Cross-boundary FSM band — B&H's new FSM criterion applies regardless of address; thin data"];
+    return[[.05,.35],"Cross-boundary into B&H — you sit in the open/out-of-catchment bands; undersubscribed schools (Longhill, PACA, BACA, Patcham) are realistic, the rest are long shots"];}
+  const d=OBS[k],under=d.off<d.pan&&d.o1===d.p1,r=d.o1/d.p1;
+  if(k==="cardinalnewman"){
+    if(faithSt==="catholic")return[[.80,.97],"Baptised Catholic (certificate required with application) — the priority categories; sibling or Catholic-feeder attendance strengthens further"];
+    if(faithSt==="christian")return[[.20,.55],"Other Christian/faith category (minister's evidence via supplementary form) — sits behind all Catholic categories at a school ~3× oversubscribed"];
+    if(primFeeder)return[[.15,.45],"Non-Catholic at a named Catholic feeder primary — a recognised category in CN's criteria, above the open group (thin public data on where this category clears; wide range)"];
+    return[[.03,.20],"No faith criterion met — the open category is rarely reached at ~3× oversubscription; a Catholic-feeder primary would change this"];}
+  if(k==="kings"){
+    // Two admissions nodes (school FAQ + determined policy): WB node = school front door, Hangleton Way;
+    // Hove node = junction of Richardson Rd & New Church Rd. 70% of offers (faith AND open) go to families
+    // closest to the Hove node, 30% to the WB node. Faith places capped at 50%, allocated alternately with open.
+    // Recent last-offered distances: open ~0.76km (Hove node) / ~0.46km (WB node); faith ~5.6km / ~1.9km.
+    const hh=homeLL(document.getElementById("pc").value);
+    const dh=hh?kmBetween(hh[0],hh[1],KINGS_NODES.hove.ll[0],KINGS_NODES.hove.ll[1]):99;
+    const dw=hh?kmBetween(hh[0],hh[1],KINGS_NODES.wb.ll[0],KINGS_NODES.wb.ll[1]):99;
+    if(sib)return[[.90,1],"Sibling priority — sits above both faith and open allocation"];
+    if(faithSt!=="none"){
+      const inH=dh<=5.6,inW=dw<=1.9;
+      if(inH&&inW)return[[.65,.92],`Faith place (SIF + minister's reference): inside recent faith cut-offs for BOTH nodes (Hove ${dh.toFixed(1)}km, WB ${dw.toFixed(1)}km) — 70% of places run off the Hove node`];
+      if(inH||inW)return[[.55,.85],`Faith place: inside the recent faith cut-off for the ${inH?"Hove":"West Blatchington"} node (${(inH?dh:dw).toFixed(1)}km)`];
+      return[[.20,.55],`Faith place: outside recent faith cut-offs for both nodes (Hove ${dh.toFixed(1)}km vs ~5.6, WB ${dw.toFixed(1)}km vs ~1.9) — cut-offs move year to year`];}
+    const oH=dh<=0.76,oW=dw<=0.46;
+    if(oH||oW)return[[.45,.80],`Open place: inside the recent open cut-off for the ${oH?"Hove":"West Blatchington"} node (${(oH?dh:dw).toFixed(1)}km) — but open cut-offs are tight and shift yearly`];
+    return[[.02,.15],`Open place: recent open cut-offs were ~0.76km (Hove node) / ~0.46km (WB node); you're at ${Math.min(dh,dw).toFixed(1)}km from the nearer node`];}
+  if(under)return[[.98,1],"Undersubscribed — effectively guaranteed"];
+  if(sib&&(st==="in"||st==="dual"))return[[.97,1],"Catchment sibling priority — historically cleared"];
+  if(fsm&&(st==="in"||st==="dual"))return[[.85,1],"Catchment free-school-meals band — cleared in 2026"];
+  if(st==="in"||st==="dual")return[[Math.max(r-.08,.5),Math.min(r+.12,.97)],"Catchment band — random allocation if oversubscribed"];
+  if(fsm)return[[.35,.75],"Out-of-catchment FSM band — thin data, wide range"];
+  if(st==="single-other")return[[.10,.45],"Open-admissions band — max "+Math.max(1,Math.round(.05*d.pan))+" places (5% of PAN), by lottery"];
+  if(S[k]&&S[k].la&&!["es","ws"].includes(S[k].la))
+    return[[.55,.90],"Allocated by this school's own criteria \u2014 usually distance from home; we don't hold a modelled route for this area yet"];
+  return[[0,.10],"Out of catchment, no priority — places rarely reach this band"];}
+
+
+/* ---------- travel: postcode-group centroids (ONS-derived) + school coords ---------- */
+let PCLL={};
+let SLL={};
+
+/* ================= data layer: manifest + per-district packs ================= */
+let MAN=null, PACKED={}, HOME=null, HOMEPC=null;
+let feeGate="maybe", listMsg="", catchOnly=false, kentTest="undecided";
+const GATEQ=[["no","No \u2014 free schools only"],["maybe","Maybe, if it were worth it"],["yes","Yes, we're considering it"]];
+const GATENOTE={
+ no:"We'll leave fee-paying schools out entirely \u2014 every number you see is about the free options.",
+ maybe:"We'll show fee-paying schools alongside the free ones, and price them honestly against what you'd get free.",
+ yes:"We'll show fee-paying schools throughout, with fees, entry gates and the pre-tax cost."};
+const KTQ=[["yes","Yes \u2014 they're sitting it"],["no","No \u2014 not sitting it"],["undecided","Not decided yet"]];
+const KTNOTE={
+ yes:"Grammar odds below assume a pass. Kent County Council describes its grammar schools as providing for about the top 25% of the ability range, so treat every grammar as a real risk until results arrive in mid-October \u2014 after which you still rank the form by 31 October.",
+ no:"We'll show the six non-selective schools only \u2014 the grammars aren't reachable without a test pass.",
+ undecided:"We'll show both, with grammar odds conditional on a pass. Registration runs from the start of June to <b>1 July</b> \u2014 four months before the school form is due, and late registrations aren't accepted. The test is sat in September of Year 6, results land mid-October, the form is due 31 October, and offers come on 1 March."};
+function drawKent(){
+  const w=document.getElementById("kentwrap");if(!w)return;
+  if(district!=="kent"){w.style.display="none";return;}
+  w.style.display="block";
+  document.getElementById("kentchips").innerHTML=KTQ.map(([v,l])=>`<span class="pchip${kentTest===v?" on":""}" onclick="setKent('${v}')">${l}</span>`).join("");
+  document.getElementById("kentnote").innerHTML=KTNOTE[kentTest];}
+function setKent(v){kentTest=v;order=order.filter(k=>!(S[k]&&S[k].sel&&v==="no"));drawKent();
+  if(!document.getElementById("s2").classList.contains("hidden")){renderCards();renderFit();renderSticky();}
+  saveState();}
+function drawGate(){
+  const el=document.getElementById("gatechips");if(!el)return;
+  el.innerHTML=GATEQ.map(([v,l])=>`<span class="pchip${feeGate===v?" on":""}" onclick="setGate('${v}')">${l}</span>`).join("");
+  document.getElementById("gatenote").textContent=GATENOTE[feeGate];}
+function setGate(v){
+  feeGate=v;drawGate();saveState();
+  const r=document.querySelector('input[name="pgate"][value="'+v+'"]');if(r)r.checked=true;
+  drawGeo();
+  if(!document.getElementById("s2").classList.contains("hidden")){renderCards();renderFit();}
+  if(!document.getElementById("s5").classList.contains("hidden"))renderFin();}
+/* one place that decides whether fee schools appear at all */
+function feeSchools(){return feeGate==="no"?[]:PRIV.filter(p=>!(p.girls&&sex==="boy"));}
+
+/* ---- remember the session so a refresh doesn't wipe the work (silently no-ops if storage is blocked) ---- */
+const SKEY="sc.v1";
+function saveState(){
+  try{localStorage.setItem(SKEY,JSON.stringify({pc:document.getElementById("pc").value,hn:document.getElementById("hn").value,
+    district,ck,ckNote,order,prios,fitAns,feeGate,yr,faithSt,sex,fsm,sib,ehcp,primSel,t:Date.now()}));}catch(e){}}
+async function restoreState(){
+  let s=null;try{s=JSON.parse(localStorage.getItem(SKEY)||"null");}catch(e){}
+  if(!s||!s.pc||!s.district||Date.now()-s.t>1000*60*60*24*30)return false;
+  const bar=document.getElementById("resume");
+  if(!bar)return false;
+  bar.style.display="block";
+  bar.innerHTML=`<b>Picking up where you left off</b> \u2014 ${s.pc.toUpperCase()}${s.order&&s.order.length?`, ${s.order.length} school${s.order.length>1?"s":""} on your list`:""}.
+    <button class="linky" onclick="clearState()">Start again</button>`;
+  document.getElementById("pc").value=s.pc; document.getElementById("hn").value=s.hn||"";
+  try{await loadPack(s.district);}catch(e){return false;}
+  district=s.district; ck=s.ck; ckNote=s.ckNote; order=s.order||[]; prios=s.prios||[];
+  Object.assign(fitAns,s.fitAns||{}); feeGate=s.feeGate||"maybe";
+  await locate(s.pc);
+  drawGate();drawFitQs();drawGeo();drawDistricts();
+  return true;}
+function clearState(){try{localStorage.removeItem(SKEY);}catch(e){}location.reload();}
+async function boot(){
+  try{
+    MAN=await (await fetch("data/manifest.json")).json();
+    Object.entries(MAN.districts).forEach(([k,v])=>{DISTRICTS[k]={...v,schools:v.schools,fee:v.fee};});
+    Object.assign(CNAMES,MAN.cnames||{});
+    drawDistricts();
+    await restoreState();
+  }catch(e){document.getElementById("s0msg").innerHTML='<div class="catch warn" style="margin-top:.7rem">Could not load the school data. Refresh, or check your connection.</div>';}
+}
+async function loadPack(dk){
+  if(PACKED[dk])return true;
+  const p=await (await fetch("data/"+MAN.districts[dk].pack)).json();
+  Object.assign(S,p.schools); Object.assign(FIT,p.fit); Object.assign(CULT,p.cult);
+  Object.assign(SLL,p.coords); Object.assign(ABBR,p.abbr);
+  Object.entries(p.areas||{}).forEach(([ck,a])=>{CNAMES[ck]=a.name;RINGSINGLES[ck]=a.schools;});
+  (p.fee||[]).forEach(f=>{if(!PRIV.find(x=>x.id===f.id))PRIV.push(f);});
+  PACKED[dk]=true; return true;
+}
+function outcodeOf(pc){const s=pc.toUpperCase().replace(/\s+/g,"");return s.length>3?s.slice(0,-3):s;}
+/* real coordinates from postcodes.io, with an outcode centroid as the fallback */
+async function locate(pcRaw){
+  const pc=pcRaw.toUpperCase().replace(/\s+/g,"");
+  if(HOMEPC===pc)return HOME;
+  try{
+    const r=await fetch("https://api.postcodes.io/postcodes/"+encodeURIComponent(pc));
+    if(r.ok){const j=await r.json();
+      if(j.result&&j.result.latitude){HOME=[j.result.latitude,j.result.longitude];HOMEPC=pc;return HOME;}}
+  }catch(e){}
+  const oc=outcodeOf(pc);
+  HOME=(MAN&&MAN.fallback[oc])?MAN.fallback[oc]:null; HOMEPC=pc; return HOME;
+}
+function homeLL(pcRaw){
+  const pc=pcRaw.toUpperCase().replace(/\s+/g,"");
+  if(HOMEPC===pc&&HOME)return HOME;
+  const oc=outcodeOf(pc);
+  return (MAN&&MAN.fallback[oc])?MAN.fallback[oc]:null;}
+function walkInfo_real(pcRaw,school){
+  const h=homeLL(pcRaw); if(!h)return null;
+  const[la1,lo1]=h,[la2,lo2]=SLL[school];
+  const R=6371,dLa=(la2-la1)*Math.PI/180,dLo=(lo2-lo1)*Math.PI/180;
+  const a=Math.sin(dLa/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)**2;
+  const km=2*R*Math.asin(Math.sqrt(a))*1.3;         // route factor on straight line
+  const mins=Math.round(km/4.8*60);                  // child walking pace
+  return{km:Math.round(km*10)/10,mins,bus:km>2.4};}
+
+
+
+/* ---------- six-axis radar: school vs school vs area average ---------- */
+const AXES=[["Results","A8",s=>typeof s.a8==="number"?s.a8:null,[34,62]],
+ ["Progress","P8",s=>{const v=parseFloat(String(s.p8||"").replace("\u2212","-"));return isNaN(v)?null:v;},[-0.8,0.9]],
+ ["5+ E&M","college currency",s=>s.b5??null,[20,80]],
+ ["Attendance","100\u2212absence",s=>s.abs&&s.abs[0]!=null?100-s.abs[0]:null,[84,93.5]],
+ ["16+ sustained","destinations",s=>s.d16?100-s.d16[3]:null,[88,99.5]],
+ ["Demand","1st prefs \u00F7 places",s=>OBS[Object.keys(S).find(k=>S[k]===s)]?OBS[Object.keys(S).find(k=>S[k]===s)].p1/PAN[Object.keys(S).find(k=>S[k]===s)]:null,[0.3,1.45]]];
+function axVals(k){const s=S[k];
+  return AXES.map(([, ,f,[lo,hi]])=>{let v;
+    try{v=f(s);}catch(e){v=null;}
+    if(k&&AXES[5]&&f===AXES[5][2]){const o=OBS[k];v=o&&PAN[k]?o.p1/PAN[k]:null;}
+    return v==null?null:Math.max(0,Math.min(1,(v-lo)/(hi-lo)));});}
+function rawVals(k){const s=S[k];
+  return[typeof s.a8==="number"?s.a8:null,
+   (()=>{const v=parseFloat(String(s.p8||"").replace("\u2212","-"));return isNaN(v)?null:v;})(),
+   s.b5??null, s.abs&&s.abs[0]!=null?s.abs[0]:null, s.d16?s.d16[3]:null,
+   OBS[k]&&PAN[k]?Math.round(OBS[k].p1/PAN[k]*100)/100:null];}
+function drawRadar(a,b,elId){
+  const out=document.getElementById(elId||"radout");if(!out||!S[a]||!S[b])return;
+  const W=340,H=270,cx=W/2,cy=H/2-4,R=92;
+  const ang=i=>-Math.PI/2+i*2*Math.PI/6;
+  const pt=(i,r)=>[cx+Math.cos(ang(i))*r*R,cy+Math.sin(ang(i))*r*R];
+  // area average per axis over schools with data
+  const ks=Object.keys(S);
+  const avg=AXES.map((_,i)=>{const vs=ks.map(k=>axVals(k)[i]).filter(v=>v!=null);
+    return vs.length?vs.reduce((x,y)=>x+y,0)/vs.length:null;});
+  const poly=(vals,color,dash,fillop)=>{
+    let segs=[],cur=[];
+    vals.forEach((v,i)=>{if(v==null){if(cur.length)segs.push(cur),cur=[];}else cur.push(pt(i,v));});
+    if(cur.length)segs.push(cur);
+    const closed=vals.every(v=>v!=null);
+    if(closed){const p=vals.map((v,i)=>pt(i,v));
+      return`<path d="M${p.map(q=>q.join(",")).join("L")}Z" fill="${color}" fill-opacity="${fillop}" stroke="${color}" stroke-width="2"${dash?` stroke-dasharray="${dash}"`:""}/>`;}
+    return segs.map(sg=>`<path d="M${sg.map(q=>q.join(",")).join("L")}" fill="none" stroke="${color}" stroke-width="2"${dash?` stroke-dasharray="${dash}"`:""}/>`).join("")
+      +vals.map((v,i)=>v==null?`<circle cx="${pt(i,0.04)[0]}" cy="${pt(i,0.04)[1]}" r="3" fill="none" stroke="${color}" stroke-width="1.2"/>`:"").join("");};
+  const grid=[0.25,0.5,0.75,1].map(r=>`<path d="M${AXES.map((_,i)=>pt(i,r).join(",")).join("L")}Z" fill="none" stroke="#D9E0E4" stroke-width="${r===1?1.2:0.6}"/>`).join("")
+    +AXES.map((_,i)=>`<line x1="${cx}" y1="${cy}" x2="${pt(i,1)[0]}" y2="${pt(i,1)[1]}" stroke="#D9E0E4" stroke-width="0.6"/>`).join("");
+  const labs=AXES.map(([t],i)=>{const[x,y]=pt(i,1.19);
+    return`<text x="${x}" y="${y}" font-size="8.5" font-weight="700" text-anchor="middle" fill="#3E5766">${t}</text>`;}).join("");
+  const va=axVals(a),vb=axVals(b);
+  out.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:520px">${grid}
+    ${poly(avg,"#8A9BA8","4 3",0.05)}${poly(va,"#147D74",null,0.14)}${poly(vb,"#B97F10",null,0.14)}${labs}
+    <rect x="8" y="${H-16}" width="10" height="3" fill="#147D74"/><text x="21" y="${H-12}" font-size="8">${S[a].name}</text>
+    <rect x="${W/2-30}" y="${H-16}" width="10" height="3" fill="#B97F10"/><text x="${W/2-17}" y="${H-12}" font-size="8">${S[b].name}</text>
+    <rect x="${W-78}" y="${H-16}" width="10" height="3" fill="#8A9BA8"/><text x="${W-65}" y="${H-12}" font-size="8">area average</text>
+  </svg>
+  <table><tr><th></th><th style="text-align:right">${S[a].name.split(" ")[0]}</th><th style="text-align:right">${S[b].name.split(" ")[0]}</th></tr>
+  ${AXES.map(([t,sub],i)=>{const ra=rawVals(a)[i],rb=rawVals(b)[i];
+    const fmt=(v,i2)=>v==null?"\u2014":(i2===3?v+"% absence":i2===4?v+"% not sustained":i2===5?"\u00D7"+v:i2===1?(v>0?"+"+v:v):v);
+    return`<tr><td>${t} <span style="font-size:.7rem;color:var(--marine-soft)">${sub}</span></td><td>${fmt(ra,i)}</td><td>${fmt(rb,i)}</td></tr>`;}).join("")}
+  </table>
+  <p class="small">All six from official published data: DfE performance tables (Results, Progress, 5+ E&M), the school census (absence), DfE destinations (16+ sustained), and DfE applications &amp; offers (Demand = first preferences per place — <b>revealed parental preference</b>, the axis league tables never show). Axes scaled to the local range; hollow dots at the centre mean <b>not published for this school</b>, not zero — most ring-school gaps close when the East/West Sussex extracts land. Progress and Demand are the two least gameable axes; read those first.</p>`;}
+/* ---------- districts: one council, one machine, one realistic pool ---------- */
+let DISTRICTS={};
+let district=null;
+function districtOf(ckey){
+  if(PAIRS[ckey]||SINGLES[ckey])return"bh";
+  if(["lewes","newhaven","peacehaven","seaford"].includes(ckey))return"lewes";
+  if(["adurshore","adurlan","worthing"].includes(ckey))return"adur";
+  if(["mid-hh","mid-bh","mid-hass"].includes(ckey))return"midsussex";
+  if(["eb-west","eb-east"].includes(ckey))return"eastbourne";
+  if(["crawley-town","horsham"].includes(ckey))return"crawley";
+  if(["chichester-a","bognor","littlehampton-a","midhurst-a","steyning-a"].includes(ckey))return"chichester";
+  if(MAN&&MAN.districts[ckey])return ckey;          // the new Kent districts use one area per district
+  if(["reigate","horley"].includes(ckey))return"surrey";
+  if(ckey==="eastgrinstead")return"midsussex";
+  if(ckey==="worthing")return"adur";
+  if(ckey==="selsey")return"chichester";
+  if(["tw","tonbridge"].includes(ckey))return"kent";
+  if(["hast-town","bexhill","rye","battle"].includes(ckey))return"hastings";
+  if(["crowborough","uckfield-a","heathfield-a","hailsham-a"].includes(ckey))return"wealden";
+  return null;}
+const SINGLESEX={millais:"girl",forest:"boy",davison:"girl",judd:"boy",skinners:"boy",twgsb:"boy",twggs:"girl",wealdkent:"girl",tonbridgegs:"girl",hillview:"girl"};
+function districtKeys(){
+  const d=DISTRICTS[district];
+  if(!d)return Object.keys(S);
+  const set=new Set(d.schools);
+  // cross-boundary neighbours: the genuinely listable ones, not the whole coast
+  const NEIGH={bh:["priory","peacehaven","shorehamac"],lewes:["longhill","stringer","varndean","cardinalnewman"],adur:["paca","blatchmill","hovepark"],midsussex:["patcham","stringer","varndean","priory"],eastbourne:["seahead","priory"],crawley:["oathall","wardenpark"],chichester:["durrington","srwa","shorehamac","stoscar"],hastings:["hailsham","heathfield"],wealden:["priory","ratton","claverham","seahead"]};
+  (NEIGH[district]||[]).forEach(k=>set.add(k));
+  return Object.keys(S).filter(k=>set.has(k)&&!(SINGLESEX[k]&&sex!=="na"&&SINGLESEX[k]!==sex)&&!(kentTest==="no"&&S[k].sel));}
+function drawDistricts(){
+  const el=document.getElementById("districts");if(!el)return;
+  el.innerHTML=Object.entries(DISTRICTS).map(([k,d])=>
+    `<div style="padding:.45rem 0;border-bottom:1px solid var(--line)">
+       <div style="font-size:.8rem;font-weight:700${district===k?";color:var(--teal)":""}">${d.name}${district===k?" \u2713":""}</div>
+       <div class="chips" style="margin-top:.25rem">${d.out.map(o=>`<span class="chip">${o}</span>`).join("")}</div>
+     </div>`).join("")
+   +`<p class="small">Nine districts across Sussex. Type any postcode above and we'll place you.</p>`;}
+function pickDistrict(k){if(district&&district!==k){order=[];prios=[];}district=k;
+  const eb=document.getElementById("eyebrow");
+  if(eb&&DISTRICTS[k])eb.textContent=`${DISTRICTS[k].name} \u00b7 Sept 2027 entry \u00b7 pilot`;
+  drawDistricts();drawGeo();}
+
+/* ---------- the map: true positions, zoomed to what matters, recentred on you ---------- */
+const GEOF={bc:[50.8227,-0.1266],roe:[50.8155,-0.0864],bg:[50.8265,-0.1526],sho:[50.8346,-0.2600],
+ logs:[50.8730,0.0100],lan:[50.8305,-0.3010],bedes:[50.8830,0.1900],hurst:[50.9330,-0.1800],bhg:[50.9530,-0.1330]};
+let ABBR={};
+const FEETAG={bc:"~\u00a338k",roe:"~\u00a335k",bg:"~\u00a321k",sho:"~\u00a320k",logs:"~\u00a322k",lan:"~\u00a339k",bedes:"~\u00a334k",hurst:"~\u00a333k",bhg:"~\u00a323k"};
+const KINGS_NODES={hove:{ll:[50.8279,-0.1929],name:"Hove node (Richardson Rd / New Church Rd)",share:70,open:0.76,faith:5.6},
+ wb:{ll:[50.85338,-0.18949],name:"West Blatchington node (the school itself)",share:30,open:0.46,faith:1.9}};
+function kingsNode(pc){const hh=homeLL(pc);if(!hh)return null;
+  const dh=kmBetween(hh[0],hh[1],KINGS_NODES.hove.ll[0],KINGS_NODES.hove.ll[1]);
+  const dw=kmBetween(hh[0],hh[1],KINGS_NODES.wb.ll[0],KINGS_NODES.wb.ll[1]);
+  return dh<=dw?{key:"hove",km:dh,other:dw,...KINGS_NODES.hove}:{key:"wb",km:dw,other:dh,...KINGS_NODES.wb};}
+function kmBetween(a,b,c,d){const R=6371,q=Math.PI/180,x=(c-a)*q,y=(d-b)*q*Math.cos((a+c)/2*q);return R*Math.sqrt(x*x+y*y);}
+function walkInfo(pc,k){return (noMapDistrict()||!SLL[k])?null:walkInfo_real(pc,k);}
+function noMapDistrict(){return !!(district&&DISTRICTS[district]&&DISTRICTS[district].nomap);}
+/* Do we actually hold this authority's catchment membership? Grouping schools by town for
+   navigation is not a catchment and must never be displayed as one. */
+function holdsCatchment(){return !!(district&&DISTRICTS[district]&&DISTRICTS[district].holdsCatchment);}
+function drawGeo(){
+  if(noMapDistrict()){const el=document.getElementById("geomap");
+    if(el)el.innerHTML=`<div class="catch" style="margin:0"><b>No map for this area yet.</b> We have every school's results, intake and real offer rates here, but not their locations \u2014 so distances and the map are switched off rather than guessed. Everything else on this page is live.</div>`;
+    return;}
+  const el=document.getElementById("geomap");if(!el)return;
+  const pcRaw=document.getElementById("pc")?document.getElementById("pc").value.trim():"";
+  const ALL=[];
+  const dk=districtKeys(),dfee=district?DISTRICTS[district].fee:Object.keys(GEOF);
+  dk.forEach(k=>{if(SLL[k])ALL.push({k,la:SLL[k][0],lo:SLL[k][1],fee:false});});
+  if(feeGate!=="no")dfee.forEach(k=>{if(GEOF[k])ALL.push({k,la:GEOF[k][0],lo:GEOF[k][1],fee:true});});
+  let h=null,resolved=false,mine=new Set(),bhUser=false,show=ALL,regime="";
+  if(pcRaw){h=homeLL(pcRaw);
+    const[c]=resolve(pcRaw,document.getElementById("hn").value.trim()||null);
+    if(h&&c&&c!=="unknown"&&c!=="ambiguous"){
+      resolved=true;bhUser=!!(PAIRS[c]||SINGLES[c]);
+      (PAIRS[c]||SINGLES[c]||RINGSINGLES[c]||[]).forEach(k=>mine.add(k));
+      if(bhUser){mine.add("kings");mine.add("cardinalnewman");}
+      const np=district&&DISTRICTS[district]?DISTRICTS[district].prefs:null;
+      const npw=np?({3:"three",4:"four",6:"six"}[np]||np)+"-preference form":"the form";
+      const auth=(DISTRICTS[district]||{}).auth||"";
+      regime=bhUser?"a lottery within catchment bands, on a "+npw
+        :auth.indexOf("West Sussex")===0?"catchment then distance, on a "+npw
+        :auth.indexOf("East Sussex")===0?"community area then distance, on a "+npw
+        :auth.indexOf("Hampshire")===0?"catchment then distance, on a "+npw
+        :auth.indexOf("Kent")===0?"each school's own criteria \u2014 Kent Test for the grammars, distance otherwise \u2014 on a "+npw
+        :auth.indexOf("Surrey")===0?"distance, on a "+npw
+        :"each school's own criteria, on a "+npw;
+      const byD=[...ALL].map(d=>({...d,dk:kmBetween(h[0],h[1],d.la,d.lo)})).sort((a,b)=>a.dk-b.dk);
+      const free=byD.filter(d=>!d.fee),fees=byD.filter(d=>d.fee);
+      const keep=new Set(byD.filter(d=>mine.has(d.k)).map(d=>d.k));
+      free.slice(0,7).forEach(d=>keep.add(d.k));            // nearest state schools, always enough to fill the frame
+      const feeLimit=fees.length&&fees[0].dk>14?Math.min(28,fees[0].dk+2):14;
+      fees.slice(0,3).forEach(d=>{if(d.dk<=feeLimit)keep.add(d.k);});
+      show=byD.filter(d=>keep.has(d.k));}}
+
+  const W=340,H=246,PADX=46,PADT=24,PADB=30;
+  const las=show.map(d=>d.la),los=show.map(d=>d.lo);
+  if(resolved){las.push(h[0]);los.push(h[1]);
+    if(district==="bh"&&show.some(d=>d.k==="kings")){las.push(KINGS_NODES.hove.ll[0]);los.push(KINGS_NODES.hove.ll[1]);}}
+  let la0=Math.min(...las),la1=Math.max(...las),lo0=Math.min(...los),lo1=Math.max(...los);
+  if(la1-la0<0.008){const m=(la0+la1)/2;la0=m-0.004;la1=m+0.004;}
+  if(lo1-lo0<0.012){const m=(lo0+lo1)/2;lo0=m-0.006;lo1=m+0.006;}
+  const kx=Math.cos(((la0+la1)/2)*Math.PI/180);
+  const spanX=(lo1-lo0)*kx,spanY=(la1-la0);
+  const scale=Math.min((W-2*PADX)/spanX,(H-PADT-PADB)/spanY);
+  const ox=(W-spanX*scale)/2,oy=PADT+((H-PADT-PADB)-spanY*scale)/2;
+  const X=lo=>ox+(lo-lo0)*kx*scale, Y=la=>oy+(la1-la)*scale;
+  const kmPx=scale/111;
+
+  /* greedy label placement: try 8 slots per dot, keep the least-colliding */
+  const nodes=show.map(d=>({...d,x:X(d.lo),y:Y(d.la)}));
+  const txtW=d=>(ABBR[d.k]||d.k).length*3.7+4;
+  const SLOTS=[[1,3],[-1,3],[1,-6],[-1,-6],[1,11],[-1,11],[1,-13],[-1,-13]];
+  const placed=[];const obst=nodes.map(n=>({x:n.x,y:n.y}));
+  let youL=null;
+  if(resolved){const hx=X(h[1]),hy=Y(h[0]);obst.push({x:hx,y:hy});
+    let best=null,bc=1e9;
+    [[0,-11],[0,15],[-16,3],[16,3]].forEach(([dx,dy])=>{
+      const lx=hx+dx,ly=hy+dy,x0=lx-11,x1=lx+11,y0=ly-6,y1=ly+2;
+      let c=Math.abs(dx)*0.2+Math.abs(dy)*0.1;
+      if(x0<3||x1>W-3||y0<8||y1>H-4)c+=60;
+      obst.forEach(o=>{if(o.x>x0-5&&o.x<x1+5&&o.y>y0-5&&o.y<y1+5)c+=14;});
+      if(c<bc){bc=c;best={lx,ly,x0,x1,y0,y1};}});
+    youL=best;placed.push(best);}
+  nodes.sort((a,b)=>(mine.has(b.k)?1:0)-(mine.has(a.k)?1:0));
+  nodes.forEach(d=>{
+    let best=null,bestCost=1e9;
+    SLOTS.forEach(([sd,dy])=>{
+      const r=mine.has(d.k)?6:4.5;
+      const lx=d.x+sd*(r+4), ly=d.y+dy, w=txtW(d), hgt=d.fee?13:8;
+      const x0=sd>0?lx:lx-w, x1=sd>0?lx+w:lx, y0=ly-6, y1=ly+hgt-6;
+      let cost=Math.abs(dy)*0.35+(sd<0?0.6:0);
+      if(x0<3||x1>W-3||y0<8||y1>H-4)cost+=60;
+      nodes.forEach(o=>{if(o===d)return; // over another dot?
+        if(o.x>x0-4&&o.x<x1+4&&o.y>y0-4&&o.y<y1+4)cost+=14;});
+      placed.forEach(pl=>{ // over an existing label?
+        if(x0<pl.x1+3&&x1>pl.x0-3&&y0<pl.y1+2&&y1>pl.y0-2)cost+=20;});
+      if(cost<bestCost){bestCost=cost;best={lx,ly,sd,x0,x1,y0,y1};}});
+    Object.assign(d,best);placed.push(best);});
+
+  let rings="";
+  if(resolved){const hx=X(h[1]),hy=Y(h[0]);
+    [1,2,3].forEach(k=>{const r=k*kmPx;if(r>16&&r<W*0.7)
+      rings+=`<circle cx="${hx}" cy="${hy}" r="${r}" fill="none" stroke="#147D74" stroke-opacity=".18" stroke-dasharray="2,5"/>`;});
+    }
+
+  const dot=d=>{const hi=mine.has(d.k),dim=resolved&&!hi&&!d.fee,r=hi?6:4.5;
+    const anch=d.sd>0?"start":"end";
+    return`<g onclick="showSchool('${d.k}')" style="cursor:pointer" opacity="${dim?.5:1}">
+      ${Math.abs(d.ly-d.y)>7?`<path d="M${d.x+d.sd*r},${d.y} L${d.lx-d.sd*2},${d.ly-2}" fill="none" stroke="#CBD5DA" stroke-width=".7"/>`:""}
+      <circle cx="${d.x}" cy="${d.y}" r="${r}" fill="${d.fee?"#B97F10":"#147D74"}"${hi?' stroke="#0E2A38" stroke-width="1.5"':''}/>
+      <text x="${d.lx}" y="${d.ly}" font-size="7.4" text-anchor="${anch}" fill="none" stroke="#F7F9FA" stroke-width="2.6" stroke-linejoin="round" font-weight="${hi?700:400}">${ABBR[d.k]||d.k}</text>
+      <text x="${d.lx}" y="${d.ly}" font-size="7.4" text-anchor="${anch}" fill="${hi?"#0E2A38":"#6B7C88"}" font-weight="${hi?700:400}">${ABBR[d.k]||d.k}</text>
+      ${d.fee?`<text x="${d.lx}" y="${d.ly+7}" font-size="6.4" text-anchor="${anch}" fill="none" stroke="#F7F9FA" stroke-width="2.4" stroke-linejoin="round">${FEETAG[d.k]||""}</text>
+      <text x="${d.lx}" y="${d.ly+7}" font-size="6.4" text-anchor="${anch}" fill="#B97F10">${FEETAG[d.k]||""}</text>`:""}</g>`;};
+
+  let nodeMark="";
+  if(resolved&&district==="bh"&&show.some(d=>d.k==="kings")){
+    const n=KINGS_NODES.hove,nx=X(n.ll[1]),ny=Y(n.ll[0]);
+    if(nx>6&&nx<W-6&&ny>10&&ny<H-6){
+      const kd=show.find(d=>d.k==="kings");
+      nodeMark=`<g onclick="showSchool('kings')" style="cursor:pointer">
+        ${kd&&kd.x>0&&kd.x<W&&kd.y>0&&kd.y<H?`<path d="M${nx},${ny} L${kd.x},${kd.y}" stroke="#147D74" stroke-width=".9" stroke-dasharray="3,3" opacity=".5"/>`:""}
+        <circle cx="${nx}" cy="${ny}" r="5.5" fill="#fff" stroke="#147D74" stroke-width="1.8" stroke-dasharray="2.5,2"/>
+        <text x="${nx}" y="${ny+13}" font-size="6.6" text-anchor="middle" fill="none" stroke="#F7F9FA" stroke-width="2.4" stroke-linejoin="round">King's Hove node</text>
+        <text x="${nx}" y="${ny+13}" font-size="6.6" text-anchor="middle" fill="#147D74">King's Hove node</text></g>`;}}
+  const you=resolved?`<g><circle cx="${X(h[1])}" cy="${Y(h[0])}" r="8.5" fill="#F7F9FA" opacity=".92"/>
+    <circle cx="${X(h[1])}" cy="${Y(h[0])}" r="4" fill="#A5372C"/>
+    <circle cx="${X(h[1])}" cy="${Y(h[0])}" r="8" fill="none" stroke="#A5372C" stroke-opacity=".35"/>
+    <text x="${youL.lx}" y="${youL.ly}" font-size="7.6" font-weight="800" text-anchor="middle" fill="none" stroke="#F7F9FA" stroke-width="2.8" stroke-linejoin="round">YOU</text>
+    <text x="${youL.lx}" y="${youL.ly}" font-size="7.6" font-weight="800" text-anchor="middle" fill="#A5372C">YOU</text></g>`:"";
+
+  const nf=show.filter(d=>!d.fee).length,np=show.filter(d=>d.fee).length;
+  const head=resolved
+    ?`<b>${nf} free</b>${np?` \u00b7 ${np} fee-paying`:""} within reach \u2014 allocated by ${regime}.${np&&show.filter(d=>d.fee).every(d=>d.dk>14)?" The nearest fee-paying schools are a real journey from here.":""} Tap a dot.`
+    :`<b>${DISTRICTS[district]?DISTRICTS[district].name:"Your area"}</b> \u2014 ${nf} free \u00b7 ${np} fee-paying. Tap a dot.`;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:560px">
+    <rect x="0" y="0" width="${W}" height="${H}" rx="8" fill="#F7F9FA"/>${rings}
+    ${nodes.map(dot).join("")}${nodeMark}${you}
+    ${resolved&&kmPx>12?`<line x1="12" y1="${H-12}" x2="${12+kmPx}" y2="${H-12}" stroke="#8A9BA8" stroke-width="1.2"/>
+      <line x1="12" y1="${H-15}" x2="12" y2="${H-9}" stroke="#8A9BA8"/><line x1="${12+kmPx}" y1="${H-15}" x2="${12+kmPx}" y2="${H-9}" stroke="#8A9BA8"/>
+      <text x="${12+kmPx/2}" y="${H-4}" font-size="6.4" text-anchor="middle" fill="#8A9BA8">1 km</text>`:""}
+    <circle cx="12" cy="12" r="3.5" fill="#147D74"/><text x="19" y="15" font-size="7.4" fill="#6B7C88">free</text>
+    ${feeGate==="no"?"":`<circle cx="46" cy="12" r="3.5" fill="#B97F10"/><text x="53" y="15" font-size="7.4" fill="#6B7C88">fees</text>`}
+  </svg>
+  <p class="small" style="margin-top:.3rem">${head}</p>`;}
+
+/* ================= RECONSTRUCTED CORE ================= */
+const PAN={};Object.keys(OBS).forEach(k=>PAN[k]=OBS[k].pan);
+
+/* ---------- primary → secondary flow (computed from geography + rules) ---------- */
+const PRIM={
+ balfour:{n:"Balfour Primary",pc:"BN1 6NE"},downsjr:{n:"Downs Junior",pc:"BN1 6JA"},
+ stlukes:{n:"St Luke's Primary",pc:"BN2 9ZE"},elmgrove:{n:"Elm Grove Primary",pc:"BN2 3ES"},
+ fairlight:{n:"Fairlight Primary",pc:"BN2 3AL"},queenspark:{n:"Queen's Park Primary",pc:"BN2 0GB"},
+ westhove:{n:"West Hove Junior",pc:"BN3 5JA"},goldstone:{n:"Goldstone Primary",pc:"BN3 7JW"},
+ hangleton:{n:"Hangleton Primary",pc:"BN3 8BB"},brunswick:{n:"Brunswick Primary",pc:"BN3 1JB"},
+ mileoak:{n:"Mile Oak Primary",pc:"BN41 2PG"},petergladwin:{n:"Peter Gladwin Primary",pc:"BN41 2WE"},
+ patchamjr:{n:"Patcham Junior",pc:"BN1 8UF"},carden:{n:"Carden Primary",pc:"BN1 8NF"},
+ woodingdean:{n:"Woodingdean Primary",pc:"BN2 6BB"},rudyard:{n:"Rudyard Kipling Primary",pc:"BN2 6UA"},
+ saltdean:{n:"Saltdean Primary",pc:"BN2 8SP"},
+ cottesmore:{n:"Cottesmore St Mary's (Catholic)",pc:"BN3 6EU",cath:true},
+ stmarymag:{n:"St Mary Magdalen (Catholic)",pc:"BN1 3EU",cath:true},
+ stjosephs:{n:"St Joseph's (Catholic)",pc:"BN2 3HN",cath:true},
+ stjohnbap:{n:"St John the Baptist (Catholic)",pc:"BN2 1PW",cath:true},
+ stbernadettes:{n:"St Bernadette's (Catholic)",pc:"BN1 8PA",cath:true},
+ ourlady:{n:"Our Lady of Lourdes (Catholic)",pc:"BN2 7HA",cath:true},
+ stmaryport:{n:"St Mary's Portslade (Catholic)",pc:"BN41 1LB",cath:true}};
+function flowFor(pk){
+  const p=PRIM[pk];if(!p)return null;
+  const[c]=resolve(p.pc,null);
+  if(c==="unknown"||c==="ambiguous")return null;
+  const pair=PAIRS[c],single=SINGLES[c],rows=[];
+  if(p.cath){
+    rows.push(["Cardinal Newman",[35,55],"named Catholic feeder — baptised pupils rank in CN's priority categories, and non-Catholic pupils here outrank the open group"]);
+    if(pair)rows.push([S[pair[0]].name+" / "+S[pair[1]].name,[22,38],"the local catchment pair"]);
+    else if(single)rows.push([S[single[0]].name,[22,38],"the local catchment school"]);
+    rows.push(["private / other",[10,20],"fee-paying, out-of-area and faith-elsewhere leakage"]);
+  }else if(pair){
+    const[a,b]=pair,ra=OBS[a].p1/(OBS[a].p1+OBS[b].p1),tot=[55,75];
+    rows.push([S[a].name,[Math.round(tot[0]*ra),Math.round(tot[1]*ra)],"catchment school"]);
+    rows.push([S[b].name,[Math.round(tot[0]*(1-ra)),Math.round(tot[1]*(1-ra))],"catchment school"]);
+    rows.push(["faith schools (CN / King's)",[5,12],"city-wide faith draw"]);
+    rows.push(["private / other",[10,18],"fee-paying and out-of-area leakage"]);
+  }else if(single){
+    rows.push([S[single[0]].name,[45,70],"catchment school (undersubscribed — most who list it get it)"]);
+    rows.push(["lottery shots elsewhere",[15,30],"families using the open/FSM bands at oversubscribed schools"]);
+    rows.push(["faith + private / other",[12,25],"CN/King's plus fee-paying leakage"]);
+  }else return null;
+  return{c,rows};}
+
+/* ---------- 16-18 institutions (official KS5 + destinations at 18) ---------- */
+const COLL16={
+ bhasvic:{n:"BHASVIC",aps:40.75,grade:"B",ret:94.8,he:81,ns18:13,cohort:1589,
+  note:"Grade-B average across nearly 1,600 A-level students — top-tier results at extraordinary scale; 81% to university, progression at the national benchmark"},
+ varncol:{n:"Varndean College",aps:33.12,grade:"C+",ret:85.7,he:58,ns18:15,cohort:615,
+  note:"C+ average; broader course mix including the area's only IB; about 1 in 7 don't complete both years"},
+ cn6:{n:"Cardinal Newman Sixth",aps:37.25,grade:"B\u2212",ret:92.8,he:66,ns18:10,cohort:247,
+  note:"B\u2212 average and 93% retention — which is why half of CN's cohort stays; the non-converging road holds up on quality"},
+ baca6:{n:"BACA Sixth",aps:19.44,grade:"D",ret:null,he:18,ns18:28,cohort:10,
+  note:"D average across a tiny cohort; 28% not sustained at 18 — the colleges are almost certainly the better 16+ route from BACA"}};
+
+/* ---------- state ---------- */
+let tlSel="bc";let moreOpen=false;
+let order=[],ck=null,ckNote="",fsm=false,sib=false,ehcp=false,yr="y6",faithSt="none",sex="na",
+    budget=null,nkids=1,primSel=null,primFeeder=false,verdictLevel="safe",prios=[],finTab="paths";
+
+function go(n){[0,1,2,3,4,5].forEach(i=>{
+  document.getElementById("s"+i).classList.toggle("hidden",i!==n);
+  document.getElementById("d"+i).classList.toggle("on",i<=n);});
+  window.scrollTo({top:0});
+  if(typeof renderSticky==="function")renderSticky();
+  document.body.style.paddingBottom=(n===2&&ck)?"74px":"";}
+
+const YRB={
+ y6:`<div class="catch warn" style="margin-top:.6rem"><b>Year 6 — application year.</b> Deadline <b>31 Oct 2026</b> · offers 2 Mar 2027 · <b>book open evenings now</b> (Sept–Oct).</div>`,
+ y5:`<div class="catch" style="margin-top:.6rem"><b>Year 5 — reconnaissance year.</b> Visit open evenings pressure-free; any catchment house move must complete by autumn 2027; start bursary conversations early.</div>`,
+ "y4-":`<div class="catch" style="margin-top:.6rem"><b>Year 4 or younger — nothing is urgent.</b> The only long-runway decision is where you live — and catchments can change, so don't over-optimise.</div>`,
+ sec:`<div class="catch" style="margin-top:.6rem"><b>Already at secondary?</b> Moving now = the council's in-year process (lists re-rank by criteria, not first-come). The 16+ step still applies.</div>`};
+
+const PRIOS=[["results","Strong results"],["progress","Progress from where they start"],["certain","Certainty of a place"],
+ ["small","Smaller school"],["sf","Sixth form on site"],["send","SEND provision"],["xc","Clubs & activities"],["near","Short journey"]];
+
+async function toStep1(){
+  const pc=document.getElementById("pc").value.trim(),hn=document.getElementById("hn").value.trim();
+  const msg=document.getElementById("s0msg");
+  if(!pc){msg.innerHTML='<div class="catch warn" style="margin-top:.7rem">Enter your postcode to continue.</div>';return;}
+  const[c,note]=resolve(pc,hn);
+  if(c==="unknown"){msg.innerHTML=`<div class="catch warn" style="margin-top:.7rem">${note}</div>`;return;}
+  if(c==="ambiguous"){msg.innerHTML=`<div class="catch warn" style="margin-top:.7rem">${note}</div>`;return;}
+  const dOf=districtOf(c)||(MAN?MAN.outcodes[outcodeOf(pc)]:null);
+  if(!dOf){msg.innerHTML=`<div class="catch warn" style="margin-top:.7rem">We don't cover that area yet \u2014 see "Where we cover" below.</div>`;return;}
+  if(district&&district!==dOf){order=[];prios=[];}
+  if(ck&&ck!==c)order=[];
+  msg.innerHTML='<div class="note" style="margin-top:.5rem">Looking up your address\u2026</div>';
+  try{await loadPack(dOf);}catch(e){msg.innerHTML='<div class="catch warn" style="margin-top:.7rem">Could not load that area\u2019s data \u2014 please try again.</div>';return;}
+  await locate(pc);
+  district=dOf;msg.innerHTML="";ck=c;ckNote=note;
+  const eb=document.getElementById("eyebrow");
+  if(eb)eb.textContent=`${DISTRICTS[dOf].name} \u00b7 Sept 2027 entry \u00b7 pilot`;
+  drawDistricts();drawGeo();saveState();
+  const fw=document.getElementById("foundwrap");
+  if(fw){fw.style.display="block";
+    fw.innerHTML=`<div style="font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--marine-soft);font-weight:700">We placed you in</div>
+      <div style="font-size:.95rem;font-weight:700;margin:.15rem 0">${DISTRICTS[dOf].name}</div>
+      <div class="note">${DISTRICTS[dOf].auth} \u00b7 ${DISTRICTS[dOf].prefs} preferences on the form \u00b7 ${DISTRICTS[dOf].rule.replace(/<[^>]+>/g,"")}</div>`;}
+  drawGate();drawKent();
+  go(1);}
+function toStep2(){
+  const pc=document.getElementById("pc").value.trim();
+  const hn=document.getElementById("hn").value.trim();
+  fsm=document.getElementById("fsm").checked;sib=document.getElementById("sib").checked;
+  ehcp=document.getElementById("ehcp").checked;
+  yr=(document.querySelector('input[name="yr"]:checked')||{value:"y6"}).value;
+  faithSt=(document.querySelector('input[name="faith"]:checked')||{value:"none"}).value;
+  sex=(document.querySelector('input[name="sex"]:checked')||{value:"na"}).value;
+  primSel=document.getElementById("prim").value||null;
+  primFeeder=!!(primSel&&PRIM[primSel]&&PRIM[primSel].cath);
+  const msg=document.getElementById("s1msg");
+  const[c,note]=resolve(pc,hn);
+  if(c==="unknown"||c==="ambiguous"){msg.innerHTML=`<div class="catch warn" style="margin-top:.8rem">${note}</div>`;go(0);return;}
+  msg.innerHTML="";ck=c;ckNote=note;
+  const wscc=(ck==="adurshore"||ck==="adurlan"||ck==="worthing");
+  const ringB=RINGSINGLES[ck]
+    ?`<div class="catch" style="margin-top:.6rem"><b>No lottery here:</b> places go by ${wscc?"catchment":"community area"}, then distance.${wscc?" <b>Three preferences, not four</b> — the safety school matters more.":""} You can mix counties on one form. <span style="color:var(--marine-soft)">Area boundaries are beta — verify with ${wscc?"WSCC":"ESCC"}.</span></div>`:"";
+  let flowB="";
+  if(primSel){const fl=flowFor(primSel);
+    if(fl)flowB=`<div class="catch" style="margin-top:.6rem"><b>Where ${PRIM[primSel].n} families typically head</b> <span style="font-size:.7rem;color:var(--marine-soft)">(computed, not a register)</span><br>`
+      +fl.rows.map(([n,[lo,hi],why])=>`<span style="font-size:.875rem">${n}: <b>${lo}\u2013${hi}%</b> <span style="color:var(--marine-soft)">\u2014 ${why}</span></span>`).join("<br>")
+      +`<div class="note" style="margin-top:.35rem">Computed from the primary's neighbourhood, this year's catchments and observed preference rates. The school's July leavers' list is the ground truth; this is the expectation.</div></div>`;}
+  document.getElementById("catch2").innerHTML=`<div class="catch" style="background:#EDF1F3"><b>${DISTRICTS[district].name}</b> \u00b7 ${DISTRICTS[district].auth} \u00b7 <b>${DISTRICTS[district].prefs} preferences</b> on the form \u00b7 deadline <b>31 October</b></div><div class="catch">Your catchment: <b>${CNAMES[ck]}</b></div>`+ringB+flowB+(YRB[yr]||"");
+  document.getElementById("prios").className="chipgrid";
+  document.getElementById("prios").innerHTML=PRIOS.map(([k,l])=>`<span class="pchip${prios.includes(k)?" on":""}" onclick="togglePrio('${k}')">${l}</span>`).join("");
+  moreOpen=false;renderCards();renderFit();saveState();renderSticky();
+  const rw=document.getElementById("rad2wrap");
+  if(rw){const rk=districtKeys();
+    const fee=feeSchools().map(p=>p.id);
+    const mine=(PAIRS[ck]||SINGLES[ck]||RINGSINGLES[ck]||[]).filter(k=>rk.includes(k));
+    const withA8=rk.filter(k=>typeof S[k].a8==="number");
+    const defA=mine[0]||withA8[0]||rk[0],defB=(mine[1]&&mine[1]!==defA)?mine[1]:(withA8.find(k=>k!==defA)||rk.find(k=>k!==defA));
+    ["rad2A","rad2B"].forEach((id,ix)=>{const s=document.getElementById(id);
+      s.innerHTML=`<optgroup label="Free">${rk.map(k=>`<option value="${k}"${k===(ix?defB:defA)?" selected":""}>${S[k].name}</option>`).join("")}</optgroup>`
+        +(fee.length?`<optgroup label="Fee-paying">${fee.map(k=>`<option value="${k}">${PRIV.find(p=>p.id===k).name}</option>`).join("")}</optgroup>`:"");});
+    rw.style.display="block";anyCompare(defA,defB,"radout2");}
+  const strip=document.getElementById("affstrip");
+  if(strip&&feeGate==="no"){strip.style.display="none";}else
+  if(strip){strip.style.display="block";
+    strip.innerHTML=feeGate==="yes"
+      ?`<b>You said fees are on the table.</b> ~\u00a320k\u2013\u00a340k/yr \u2248 <b>\u00a334k\u2013\u00a369k of pre-tax salary per child</b> \u2014 fee schools appear in the list below, and the last step prices them against these free places.`
+      :`<b>You said maybe.</b> ~\u00a320k\u2013\u00a340k/yr \u2248 <b>\u00a334k\u2013\u00a369k of pre-tax salary per child</b> \u2014 shown alongside the free options so you can see what the money would actually buy.`;}
+  const srcEl=document.getElementById("srcnote");
+  if(srcEl)srcEl.innerHTML=district==="bh"
+    ? `<b>Where these catchments come from:</b> Brighton &amp; Hove's determined admission arrangements for 2026/27, as amended by the Schools Adjudicator on 20 October 2025 (ADA4423 and others) \u2014 including the Whitehawk and Kemptown boundary moves, and the ruling that Blatchington Mill and Dorothy Stringer stay at 330 places. The 2027/28 arrangements repeat these boundaries.`
+    : (ck==="horsham"||ck==="horsham-fm")
+      ? `<b>Horsham is split between two catchments:</b> Tanbridge House has one, Millais and The Forest share the other. Which one your address falls in decides your priority, and we can't tell them apart from a postcode \u2014 check West Sussex's catchment map for your exact address. All three are shown below.`
+    : (DISTRICTS[district]&&DISTRICTS[district].auth&&DISTRICTS[district].auth.indexOf("Hampshire")===0)
+      ? `<b>Hampshire runs real catchments \u2014 and some addresses sit in two at once.</b> Every community and voluntary controlled school has a designated catchment area, a few own-admission schools use none, and an address can be in catchment for more than one school. Check yours on Hampshire's catchment finder before you rank; we place you by postcode district, which is an approximation of it.`
+    : (MAN&&MAN.verified&&MAN.verified[ck])
+      ? `<b>This area is verified:</b> ${MAN.verified[ck]}. The schools shown as your area schools are the ones the council lists for it. Where exactly the boundary falls between areas is still our approximation \u2014 confirm your address with ${DISTRICTS[district].auth} before you rank.`
+    : DISTRICTS[district]&&DISTRICTS[district].nomap
+      ? `<b>Where these odds come from:</b> the council's published applications and offers for this area. We don't hold catchment boundaries here, so nothing on this page claims one.`
+      : `<b>On catchment:</b> we place you by postcode district, which is an approximation of ${DISTRICTS[district]?DISTRICTS[district].auth:"the council"}'s address-level areas. Confirm your exact catchment with the council before you rank your form.`;
+  const gn=document.getElementById("geonote");
+  if(gn){const ap=districtKeys().filter(k=>S[k]&&S[k].geo==="approx").length;
+    gn.innerHTML=noMapDistrict()?"<b>Distances are switched off in this area.</b> We hold every school's results and real offer rates here but not their locations, so nothing on this page estimates a journey."
+      :ap?`<b>On distances:</b> ${ap} of these schools aren't positioned yet, so they carry no walk time. The rest are placed from their official postcode in the Department for Education's school register.`
+      :"<b>On distances:</b> every school here is placed from its official postcode in the Department for Education's school register; walk times are straight-line estimates at a child's pace.";}
+  document.getElementById("gencaveat").innerHTML=sex==="na"?"":`Results shown use the ${sex==="boy"?"boys'":"girls'"} figure where published, with the other sex marked as a triangle on the track.`;
+  go(2);}
+function togglePrio(k){const i=prios.indexOf(k);
+  if(i>=0)prios.splice(i,1);else if(prios.length<3)prios.push(k);
+  document.getElementById("prios").className="chipgrid";
+  document.getElementById("prios").innerHTML=PRIOS.map(([kk,l])=>`<span class="pchip${prios.includes(kk)?" on":""}" onclick="togglePrio('${kk}')">${l}</span>`).join("");}
+
+function a8of(k){const s=S[k];
+  if(sex==="girl"&&s.a8g!=null)return s.a8g;
+  if(sex==="boy"&&s.a8b!=null)return s.a8b;
+  return typeof s.a8==="number"?s.a8:null;}
+function otherA8(k){const s=S[k];
+  if(sex==="girl"&&s.a8b!=null)return s.a8b;
+  if(sex==="boy"&&s.a8g!=null)return s.a8g;
+  return null;}
+function relevance(k){
+  const inCatch=(PAIRS[ck]||SINGLES[ck]||RINGSINGLES[ck]||[]).includes(k);
+  const[[lo,hi]]=pOffer(k,statusFor(k,ck),fsm,sib);
+  const w=walkInfo(document.getElementById("pc").value,k);
+  const a8=a8of(k);
+  const sameDist=districtKeys().includes(k)&&(DISTRICTS[district]||{schools:[]}).schools.includes(k);
+  let v=hi*3.0+lo*2.0;                                   // attainability dominates
+  if(inCatch&&holdsCatchment())v+=3.0;                   // your own catchment leads (only where we hold boundaries)
+  if(sameDist)v+=1.2;                                    // your council before the neighbours'
+  if(OWN.has(k)&&(faithSt!=="none"||k==="kings"))v+=0.6; // faith routes when relevant
+  if(a8!=null)v+=((a8-34)/28)*1.2*hi;                    // quality, but only as far as you can reach it
+  if(w)v+=Math.max(0,(6-w.km)/6)*1.0;                    // proximity
+  if(Object.keys(fitAns).length){const fs=fitScore(k);if(fs!=null)v+=(fs-55)/45*1.0;} // fit, once known
+  if(S[k]&&S[k].sel&&kentTest!=="yes")v-=1.4;            // conditional on a test not yet sat
+  return v;}
+function riskOfNone(list){
+  if(!ck||!list.length)return null;
+  let lo=1,hi=1;
+  list.forEach(k=>{const[[a,b]]=pOffer(k,statusFor(k,ck),fsm,sib);lo*=(1-b);hi*=(1-a);});
+  if(PAIRS[ck]&&PAIRS[ck].every(s=>list.includes(s)))return{lo:0,hi:0,pair:true};
+  return{lo,hi,pair:false};}
+
+/* ---------- sticky summary: the list and its consequence, always in view ---------- */
+function addCatchment(){
+  const cap=district?DISTRICTS[district].prefs:4;
+  (PAIRS[ck]||SINGLES[ck]||RINGSINGLES[ck]||[]).forEach(k=>{
+    if(S[k]&&!order.includes(k)&&order.length<cap)order.push(k);});
+  listMsg="";renderCards();saveState();renderSticky();}
+function renderSticky(){
+  const bar=document.getElementById("sticky");if(!bar)return;
+  const onStep3=!document.getElementById("s2").classList.contains("hidden");
+  if(!onStep3||!ck){bar.style.display="none";return;}
+  const cap=district?DISTRICTS[district].prefs:4;
+  bar.style.display="block";
+  if(!order.length){
+    bar.innerHTML=`<div class="stk"><div class="stkl"><b>No schools chosen yet</b> \u2014 tap cards in the order you'd want them. You get ${cap} preferences.</div></div>`;
+    return;}
+  const r=riskOfNone(order);
+  const pct=r.pair?"0%":`${(r.lo*100).toFixed(0)}\u2013${(r.hi*100).toFixed(0)}%`;
+  const tone=r.pair||r.hi<=.02?"safe":r.hi<=.25?"warn":"risk";
+  bar.innerHTML=`<div class="stk ${tone}">
+    <div class="stkl">${order.map((k,i)=>`<span class="stkn">${i+1}. ${ABBR[k]||(S[k]?S[k].name:k)}</span>`).join("")}
+      ${order.length<cap?`<span class="stkn empty">${cap-order.length} slot${cap-order.length>1?"s":""} free</span>`:""}</div>
+    <div class="stkr"><span class="stkp">${pct}</span><span class="stkc">chance of<br>none of these</span></div></div>`;}
+function renderCards(){
+  const el=document.getElementById("cards");el.innerHTML="";
+  const inCatch=(PAIRS[ck]||SINGLES[ck]||RINGSINGLES[ck]||[]);
+  const rankOrder=districtKeys().filter(k=>a8of(k)!=null).sort((a,b)=>a8of(b)-a8of(a));
+  let ranked=districtKeys().sort((a,b)=>relevance(b)-relevance(a));
+  if(catchOnly)ranked=ranked.filter(k=>inCatch.includes(k)||order.includes(k));
+  const shown=[...order];                                 // anything you've picked stays visible
+  ranked.forEach(k=>{if(shown.length<5&&!shown.includes(k))shown.push(k);});
+  const rest=ranked.filter(k=>!shown.includes(k));
+  const keys=shown;
+  const build=(k,box)=>{
+    const s=S[k],d=document.createElement("div");d.className="sc";d.dataset.k=k;
+    const rank=rankOrder.indexOf(k)+1;
+    const a8=a8of(k),oth=otherA8(k);
+    const pos=v=>Math.max(0,Math.min(100,(v-34)/(62-34)*100));
+    const p8v=parseFloat(String(s.p8||"").replace("\u2212","-"));
+    const p8b=isNaN(p8v)?"":`<span class="p8b ${p8v>=0.2?"up":p8v<=-0.25?"dn":"mid"}">${p8v>=0.2?"STRONG":p8v<=-0.25?"WEAK":"AVERAGE"} PROGRESS</span>`;
+    const ab=s.abs&&s.abs[0]!=null?`<span class="chip">${s.abs[0]<9?"LOW":s.abs[0]<12?"AVG":"HIGH"} ABSENCE ${s.abs[0]}%</span>`:"";
+    const w=walkInfo(document.getElementById("pc").value,k);
+    let wc=w?`<span class="chip">${w.bus?"~"+w.km+" KM \u00b7 BUS":"~"+w.mins+" MIN WALK"}</span>`:"";
+    if(k==="kings"){const kn=kingsNode(document.getElementById("pc").value);
+      if(kn)wc+=`<span class="chip sf">${kn.km.toFixed(1)} KM TO ${kn.key==="hove"?"HOVE":"WEST BLATCHINGTON"} NODE</span>`;}
+    if(s.nocatch)wc+=`<span class="chip faith">NO CATCHMENT AREA</span>`;
+    if(!SLL[k]&&!noMapDistrict())wc+=`<span class="chip">POSITION UNKNOWN</span>`;
+    if(s.ret!=null&&(s.ret<RETN.p10||s.ret>=RETN.p90))wc+=`<span class="chip ${s.ret>=RETN.p90?"sf":"faith"}">${s.ret>=RETN.p90?"STABLE STAFF":"HIGH TEACHER TURNOVER"}</span>`;
+    const fsc=Object.keys(fitAns).length?fitScore(k):null;
+    if(fsc!=null)wc+=`<span class="chip ${fsc>=75?"sf":fsc>=55?"":"faith"}">FIT ${fsc}</span>`;
+    if(s.res!=null&&Math.abs(s.res)>=3)wc+=`<span class="chip ${s.res>0?"sf":"faith"}">${s.res>0?"BEATS ITS INTAKE +"+s.res:"BELOW ITS INTAKE "+s.res}</span>`;
+    const beta=s.la==="es"?'<span class="chip faith">EAST SUSSEX \u00b7 BETA</span>':s.la==="ws"?'<span class="chip faith">WEST SUSSEX \u00b7 BETA</span>':'';
+    d.innerHTML=`<div class="top"><span class="nm">${s.name} ${(inCatch.includes(k)&&holdsCatchment())?'<span class="catchflag">YOUR CATCHMENT</span>':""}</span><span class="ord"></span></div>
+      ${a8!=null?`<div class="rankline">Results: <b>${rank}${rank===1?"st":rank===2?"nd":rank===3?"rd":"th"} of ${rankOrder.length}</b> across the area</div>
+      <div class="track"><div class="med" style="left:50%"></div>${oth!=null?`<div class="gdot" style="left:${pos(oth)}%"></div>`:""}<div class="dot" style="left:${pos(a8)}%"></div></div>
+      <div class="tlab"><span>area low</span><span>national average</span><span>area high</span></div>`
+      :`<div class="rankline" style="color:var(--marine-soft)">Results not yet published in this extract</div>`}
+      <div class="chips">${p8b}${ab}${wc}${beta}${s.sf?'<span class="chip sf">HAS SIXTH FORM</span>':'<span class="chip">11-16 \u2192 COLLEGE</span>'}${s.rp?'<span class="chip sf">SEND RESOURCED PROVISION</span>':''}<span class="chip">${(s.insp||"").toUpperCase()}</span></div>
+      <div class="note" style="margin-top:.3rem">${s.ch}</div>
+      <div class="note" style="margin-top:.25rem"><a href="#" onclick="event.stopPropagation();event.preventDefault();showSchool('${k}')" style="color:var(--teal);font-weight:700;text-decoration:none">Full details \u2192</a></div>`;
+    d.onclick=()=>{const i=order.indexOf(k),cap=district?DISTRICTS[district].prefs:4;
+      if(i>=0){order.splice(i,1);listMsg="";}
+      else if(order.length<cap){order.push(k);listMsg="";}
+      else{listMsg=`Your form has <b>${cap} preferences</b> and they're all used. Tap one of your ${cap} to drop it, then add ${S[k]?S[k].name:"this school"}.`;}
+      renderCards();saveState();renderSticky();};
+    box.appendChild(d);};
+  if(!noMapDistrict()&&(catchOnly||ranked.length+rest.length>6)){
+    const f=document.createElement("div");f.className="chips";f.style.margin="0 0 .5rem";
+    f.innerHTML=`<span class="pchip${catchOnly?" on":""}" onclick="catchOnly=!catchOnly;renderCards()">My catchment only</span>
+      <span class="pchip${!catchOnly?" on":""}" onclick="catchOnly=false;renderCards()">Everything in range</span>`;
+    el.appendChild(f);}
+  if(listMsg){const w=document.createElement("div");w.className="catch warn";w.style.margin="0 0 .6rem";
+    w.innerHTML=listMsg;el.appendChild(w);}
+  // only offer this where the catchment really is one school or a designated pair —
+  // in the wider community areas it would fill the form for them, single-sex schools included
+  const catAll=noMapDistrict()?[]:(PAIRS[ck]||SINGLES[ck]||RINGSINGLES[ck]||[]).filter(k=>S[k]);
+  const cat=(catAll.length<=2?catAll:[]).filter(k=>!order.includes(k));
+  if(cat.length&&order.length<(district?DISTRICTS[district].prefs:4)){
+    const q=document.createElement("div");q.className="quickadd";
+    q.innerHTML=`<div><b>${cat.length>1?"Your two catchment schools":"Your catchment school"}</b>
+        <div class="note">${cat.map(k=>S[k].name).join(" and ")}${PAIRS[ck]&&cat.length>1?" \u2014 listing both is what triggers the council's guarantee.":" \u2014 your strongest claim on a place."}</div></div>
+      <button class="qbtn" onclick="addCatchment()">Add ${cat.length>1?"both":"it"}</button>`;
+    el.appendChild(q);}
+  const lead=document.createElement("p");lead.className="small";lead.style.margin="0 0 .2rem";
+  lead.innerHTML=`Ordered by what's realistic from your address \u2014 catchment first, then odds, fit, journey and results. Tap in the order you'd want them.`;
+  el.appendChild(lead);
+  keys.forEach(k=>build(k,el));
+  if(rest.length){
+    const det=document.createElement("details");det.className="sec";det.open=moreOpen;
+    det.addEventListener("toggle",()=>{moreOpen=det.open;});
+    det.innerHTML=`<summary>${rest.length} more school${rest.length===1?"":"s"} \u2014 longer shots and longer journeys</summary>`;
+    const inner=document.createElement("div");inner.className="inner";det.appendChild(inner);
+    rest.forEach(k=>build(k,inner));
+    el.appendChild(det);}
+  paint();}
+function paint(){document.querySelectorAll("#cards .sc").forEach(el=>{
+  const i=order.indexOf(el.dataset.k);
+  el.classList.toggle("sel",i>=0);
+  const o=el.querySelector(".ord");if(o)o.textContent=i>=0?("#"+(i+1)):"";});
+  const n2=document.getElementById("n2");if(n2)n2.disabled=order.length===0;}
+
+function recommend(){
+  const cand=districtKeys().filter(k=>{
+    const st=statusFor(k,ck);const[[lo,hi]]=pOffer(k,st,fsm,sib);
+    return hi>0.1;});
+  const score=k=>{const s=S[k];let v=0;
+    const[[lo,hi]]=pOffer(k,statusFor(k,ck),fsm,sib);
+    const a8=a8of(k);
+    if(prios.includes("results")&&a8!=null)v+=(a8-34)/28*2;
+    if(prios.includes("progress")){const p=parseFloat(String(s.p8||"").replace("\u2212","-"));if(!isNaN(p))v+=(p+0.8)/1.7*2;}
+    if(prios.includes("certain"))v+=lo*2;
+    if(prios.includes("sf")&&s.sf)v+=1.2;
+    if(prios.includes("send")&&s.rp)v+=1.2;
+    if(prios.includes("xc")&&s.xc)v+=0.8;
+    if(prios.includes("near")){const w=walkInfo(document.getElementById("pc").value,k);if(w)v+=Math.max(0,(5-w.km)/5)*1.5;}
+    if(prios.includes("small")&&(k==="kings"||k==="patcham"||k==="longhill"))v+=0.8;
+    return v+lo*0.3;};
+  const ranked=cand.sort((a,b)=>score(b)-score(a));
+  const pair=PAIRS[ck];
+  let list=[];
+  if(pair){list=[...pair].sort((a,b)=>score(b)-score(a));
+    ranked.forEach(k=>{if(list.length<4&&!list.includes(k))list.push(k);});}
+  else{list=ranked.slice(0,3);
+    const safe=cand.find(k=>pOffer(k,statusFor(k,ck),fsm,sib)[0][0]>=0.85);
+    if(safe&&!list.includes(safe))list=[...list.slice(0,3),safe];}
+  order=list.slice(0,4).sort((a,b)=>score(b)-score(a));
+  paint();
+  const why=order.map((k,i)=>{const[[lo,hi]]=pOffer(k,statusFor(k,ck),fsm,sib);
+    const role=lo>=0.85?"safety net \u2014 near-certain":hi<0.4?"free shot \u2014 low odds, costs nothing to list":"realistic target";
+    return `<div class="note">${i+1}. <b>${S[k].name}</b> \u2014 ${role}</div>`;}).join("");
+  document.getElementById("reco").innerHTML=`<div class="catch" style="margin-top:.6rem"><b>Built from what you picked</b> \u2014 ordered by desire, not odds; a long shot first never costs the safety below it.${why}<div class="note" style="margin-top:.35rem">Edit it freely by tapping cards.</div></div>`;}
+
+/* ---------- step 3: verdict, odds, 16+ ---------- */
+function toStep3(){
+  const sEl=document.getElementById("schools"),vEl=document.getElementById("verdict");
+  document.getElementById("catch3").innerHTML=`<div class="catch">Catchment: <b>${CNAMES[ck]}</b> <span style="color:var(--marine-soft)">(${ckNote})</span></div>`
+   +(ehcp?`<div class="catch warn" style="margin-top:.5rem"><b>With an EHCP the lottery doesn't apply:</b> a school named in the plan is automatic, ahead of every criterion. The amended plan is due <b>15 February</b> of Year 6 — start with the SEND team in the autumn, and apply on the normal form in parallel. Free help: Amaze / SENDIASS.</div>`:"");
+  sEl.innerHTML="";let loN=1,hiN=1;
+  order.forEach((k,ix)=>{
+    const st=statusFor(k,ck),[[lo,hi],n]=pOffer(k,st,fsm,sib);
+    loN*=(1-hi);hiN*=(1-lo);
+    const cls=lo>=.9?"":"mid",low=hi<=.5?"low":"";
+    const w=walkInfo(document.getElementById("pc").value,k);
+    sEl.innerHTML+=`<div class="school"><div class="nmr"><span>${ix+1}. ${S[k].name}</span>
+      <span class="pct">${Math.round(lo*100)}\u2013${Math.round(hi*100)}%</span></div>
+      <div class="rail"><div class="band ${cls} ${low}" style="left:${lo*100}%;width:${(hi-lo)*100}%"></div></div>
+      <div class="note">${n}${w?` \u00b7 ${w.bus?"\u2248"+w.km+" km \u2014 bus":"\u2248"+w.mins+" min walk"}`:""}</div></div>`;});
+  const pair=PAIRS[ck]&&PAIRS[ck].every(s=>order.includes(s));
+  if(pair){loN=0;hiN=0;}
+  const hasSafe=order.some(k=>pOffer(k,statusFor(k,ck),fsm,sib)[0][0]>=.98);
+  const pcNo=`${(loN*100).toFixed(1)}\u2013${(hiN*100).toFixed(1)}%`;
+  const M=t=>`<div class="note" style="margin-top:.35rem">On money: ${t.charAt(0).toUpperCase()+t.slice(1)}</div>`;
+  if(pair){verdictLevel="safe";vEl.className="verdict safe";
+    vEl.innerHTML=`<div><b>Protected.</b> Both catchment schools listed — the council guarantees one of them or better. Chance of none of your choices: <b>0%</b></div>${M("fees here would be a preference, never a necessity.")}`;}
+  else if(hasSafe&&hiN<.02){verdictLevel="safe";vEl.className="verdict safe";
+    vEl.innerHTML=`<div><b>Solid.</b> A guaranteed school is on it. Chance of none: <b>${pcNo}</b></div>${M("fees would buy preference, not safety.")}`;}
+  else if(hiN<.08){verdictLevel="warn";vEl.className="verdict warn";
+    vEl.innerHTML=`<div><b>One gap.</b> No guaranteed school${PAIRS[ck]?" (the pair guarantee needs both catchment schools listed)":""}. Chance of none: <b>${pcNo}</b><span class="vtail">then you get what's left.</span></div>${M("a \u00a3150\u2013300 private application is cheap insurance here.")}`;}
+  else{verdictLevel="bad";vEl.className="verdict bad";
+    vEl.innerHTML=`<div><b>Real risk.</b> Chance of none: <b>${pcNo}</b><span class="vtail">Add a near-certain school \u2014 an unused preference costs nothing.</span></div>${M("fix the list first \u2014 it's free.")}`;}
+  render16();renderFin();go(3);}
+
+function render16(){
+  const el=document.getElementById("pic16");if(!el)return;
+  if(!order.length){el.innerHTML="";return;}
+  const DL={y6:["December 2031","September 2033"],y5:["December 2032","September 2034"],
+    "y4-":["December of their Year 11","the following September"],
+    sec:["the first Friday of December in their Year 11","the following September"]};
+  const[dl,st]=DL[yr]||DL.sec;
+  const rows=order.map(k=>{const s=S[k];if(!s.d16)return`<div style="margin:.7rem 0"><div style="font-size:.875rem;font-weight:600">${s.name}</div><div class="note">Destination and grade data not yet published in this extract \u2014 a gap, not a zero.</div></div>`;
+    const[col,own,fe,ns]=s.d16;
+    return`<div style="margin:.7rem 0"><div style="display:flex;justify-content:space-between;font-size:.875rem;font-weight:600"><span>${s.name}</span><span style="color:var(--marine-soft);font-weight:500">5+ E&amp;M: <b>${s.b5}%</b></span></div>
+      <div class="rail" style="height:10px;margin:.25rem 0 .1rem;background:#F3EFE6">
+        <div class="band" style="left:0;width:${col}%;background:#147D74;opacity:.8"></div>
+        <div class="band" style="left:${col}%;width:${own}%;background:#0E2A38;opacity:.7"></div>
+        <div class="band" style="left:${col+own}%;width:${fe}%;background:#B97F10;opacity:.6"></div></div>
+      <div class="tlab"><span>${col}% colleges</span><span>${own}% own sixth</span><span>${fe}% FE \u00b7 ${ns}% not sustained</span></div></div>`;}).join("");
+  const cs=Object.keys(COLL16);
+  const sel=(id,def,other)=>`<select id="${id}" onchange="drawColl(document.getElementById('c16A').value,document.getElementById('c16B').value)" style="flex:1;min-width:0;padding:.4rem;font-size:.875rem;border:1.5px solid var(--line);border-radius:8px;background:var(--chalk)">${cs.map(k=>`<option value="${k}"${k===def?" selected":""}>${COLL16[k].n}</option>`).join("")}</select>`;
+  el.innerHTML=`<h2>Your 16+ picture \u2014 the second gate, measured</h2>
+    <p class="sub">At 11 the gate is your address; at 16 it's <b>grades</b>. Per school: where leavers went, and the share with <b>grade 5+ English &amp; maths</b> \u2014 the college currency.</p>
+    ${rows}
+    <h3 style="font-size:.95rem;margin-top:1rem">The institutions behind that gate \u2014 official 16-18 results</h3>
+    <div style="display:flex;gap:.5rem;margin:.3rem 0">${sel("c16A","bhasvic")}${sel("c16B","varncol")}</div>
+    <div id="rad16"></div>
+    ${cs.map(k=>{const c=COLL16[k];return`<p class="small" style="margin:.35rem 0"><b>${c.n}</b> \u2014 A-level average <b>${c.grade}</b> (${c.aps} pts, ${c.cohort.toLocaleString()} students) \u00b7 ${c.he}% to university${c.ret!=null?` \u00b7 ${c.ret}% complete both years`:""} \u00b7 ${c.ns18}% not sustained at 18. ${c.note}.</p>`;}).join("")}
+    <p class="small" style="border-left:3px solid var(--teal);padding-left:.5rem"><b>The Accord rule:</b> BHASVIC <i>or</i> Varndean College, never both. The gap: a full grade (B vs C+), 81% vs 58% to university. Choose Varndean College <i>for</i> the IB and breadth \u2014 numbers in view.</p>
+    <p class="small">Your child's college deadline: <b>${dl}</b>. Teal = colleges \u00b7 dark = own sixth (Newman keeps half) \u00b7 amber = FE. "Not sustained" = not in education or work six months on.</p>`;
+  drawColl("bhasvic","varncol");}
+
+function drawColl(a,b){
+  const el=document.getElementById("rad16");if(!el||!COLL16[a])return;
+  const AX=["A-level grades","University entry","Completing the course","Sustained at 18","Cohort scale"];
+  const val=k=>{const c=COLL16[k];return[c.aps,c.he,c.ret,100-c.ns18,Math.log10(c.cohort)];};
+  const ks=Object.keys(COLL16),n=AX.length;
+  const mins=Array(n).fill(1e9),maxs=Array(n).fill(-1e9);
+  ks.forEach(k=>val(k).forEach((x,i)=>{if(x!=null){mins[i]=Math.min(mins[i],x);maxs[i]=Math.max(maxs[i],x);}}));
+  const nz=v=>v.map((x,i)=>x==null?null:0.08+0.86*(x-mins[i])/((maxs[i]-mins[i])||1));
+  const avg=AX.map((_,i)=>{const xs=ks.map(k=>val(k)[i]).filter(x=>x!=null);
+    return 0.08+0.86*((xs.reduce((s,x)=>s+x,0)/xs.length)-mins[i])/((maxs[i]-mins[i])||1);});
+  const W=340,H=270,cx=W/2,cy=H/2-4,R=90;
+  const pt=(i,r)=>{const a2=-Math.PI/2+i*2*Math.PI/n;return[cx+Math.cos(a2)*r*R,cy+Math.sin(a2)*r*R];};
+  const ring=r=>"M"+AX.map((_,i)=>pt(i,r).join(",")).join("L")+"Z";
+  const poly=(v,col,dash,fill)=>{const p=v.map((x,i)=>x==null?pt(i,0.05):pt(i,x));
+    return`<path d="M${p.map(q=>q.join(",")).join("L")}Z" fill="${col}" fill-opacity="${fill}" stroke="${col}" stroke-width="2"${dash?' stroke-dasharray="4 3"':""}/>`;};
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:440px">
+    ${[0.25,0.5,0.75,1].map(r=>`<path d="${ring(r)}" fill="none" stroke="#D9E0E4" stroke-width="${r===1?1.2:0.6}"/>`).join("")}
+    ${poly(avg,"#8A9BA8",true,0.05)}${poly(nz(val(a)),"#147D74",false,0.14)}${b&&COLL16[b]?poly(nz(val(b)),"#B97F10",false,0.14):""}
+    ${AX.map((t,i)=>{const[x,y]=pt(i,1.2);return`<text x="${x}" y="${y}" font-size="7.6" text-anchor="middle" fill="#3E5766">${t}</text>`;}).join("")}
+    <rect x="8" y="${H-14}" width="9" height="4" fill="#147D74"/><text x="20" y="${H-9}" font-size="8">${COLL16[a].n}</text>
+    ${b&&COLL16[b]?`<rect x="${W/2-40}" y="${H-14}" width="9" height="4" fill="#B97F10"/><text x="${W/2-28}" y="${H-9}" font-size="8">${COLL16[b].n}</text>`:""}
+    <rect x="${W-70}" y="${H-14}" width="9" height="4" fill="#8A9BA8"/><text x="${W-58}" y="${H-9}" font-size="8">average</text></svg>`;}
+
+
+/* ---------- what the catchment costs: HM Land Registry sales, 2020-2026 ---------- */
+const PPD={bmhp:{S:645792,T:617750,D:992500,basket:625000,n:3897},dsv:{S:610000,T:525000,D:930000,basket:531808,n:3654},patcham:{S:470000,T:403750,D:690000,basket:455000,n:1580},longhill:{S:425000,T:466000,D:545000,basket:441500,n:2371},baca:{S:365000,T:375000,D:0,basket:370000,n:790}};
+function priceBlock(){
+  if(!ck||!PPD[ck])return"";
+  const mine=PPD[ck];
+  const rows=Object.keys(PPD).map(c=>({c,b:PPD[c].basket,n:PPD[c].n})).sort((a,b)=>b.b-a.b);
+  const max=rows[0].b,min=rows[rows.length-1].b;
+  const nameOf=c=>CNAMES[c]||c;
+  const bars=rows.map(r=>`<div style="display:flex;align-items:center;gap:.5rem;margin:.28rem 0;font-size:.8rem">
+    <span style="width:104px;flex:none;${r.c===ck?"font-weight:700":"color:var(--marine-soft)"}">${nameOf(r.c).replace(" (dual)","")}</span>
+    <span style="flex:1;height:11px;background:#EDF1F3;border-radius:6px;position:relative"><span style="position:absolute;left:0;top:0;bottom:0;width:${Math.round(r.b/max*100)}%;background:${r.c===ck?"#147D74":"#B7C2C9"};border-radius:6px"></span></span>
+    <span style="width:52px;text-align:right;font-variant-numeric:tabular-nums;${r.c===ck?"font-weight:700":""}">\u00a3${Math.round(r.b/1000)}k</span></div>`).join("");
+  const gap=mine.basket-min, top=max-mine.basket;
+  return`<div class="card"><h2>What this catchment costs</h2>
+  <p class="sub" style="margin-bottom:.5rem">Median sale price of a semi or terrace \u2014 ${PPD[ck].n.toLocaleString()} family-home sales in your catchment since 2020 (HM Land Registry). Same house type, different catchment \u2014 so the gap is the market's view, not a difference in housing stock.</p>
+  ${bars}
+  <p class="small">Your catchment sits <b>\u00a3${Math.round(gap/1000)}k above</b> the cheapest in the city${top>0?` and <b>\u00a3${Math.round(top/1000)}k below</b> the dearest`:""}. Read this as context, not causation: catchment and neighbourhood affluence move together, and only a street-by-street test can separate them.</p>
+  ${ck==="dsv"||ck==="patcham"?`<div style="margin:.6rem 0;padding:.6rem .7rem;background:#F7F9FA;border-radius:8px">
+    <div style="font-size:.8rem;font-weight:700;margin-bottom:.2rem">The sharpest boundary in the city</div>
+    <div class="note">Inside one postcode sector \u2014 <b>BN1 5</b>, split down the middle by the catchment line \u2014 semi-detached houses on the <b>Stringer/Varndean</b> side sold for a median <b>\u00a3730k</b> against <b>\u00a3570k</b> on the <b>Patcham</b> side: a <b>\u00a3160k (28%)</b> gap, on 216 sales, present in every year from 2020 to 2025 (+43%, +27%, +16%, +38%, +33%).</div>
+    <div class="note" style="margin-top:.3rem">Same sector, same house type, same market \u2014 which removes most of the usual objections. It does not remove all of them: the two sides are still different streets, and Withdean is not Patcham. Read it as the ceiling on what catchment could be worth here, not a measurement of it.</div></div>`:""}
+  <p class="small">${feeGate==="no"?"":`<b>Against fees:</b>`} a \u00a3${Math.round(gap/1000)}k higher purchase price costs roughly <b>\u00a3${Math.round(gap*0.045/1000)}k a year</b> in mortgage interest at 4.5% \u2014 against <b>\u00a320k\u2013\u00a340k a year</b> for a fee-paying day school. Moving is usually the cheaper way to buy a school place, and you get the asset back.</p></div>`;}
+/* ---------- culture profiles: the things a knowledgeable friend would tell you ----------
+   Every line is either a published fact (foundation, site, roll, boarding share, specialism)
+   or stated structural inference from the gates. Nothing here is a review. */
+let CULT={};
+function cultureBlock(k){const c=CULT[k];if(!c)return"";
+  const row=(l,v)=>v?`<div style="margin:.45rem 0"><div style="font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--marine-soft);font-weight:700">${l}</div><div style="font-size:.875rem">${v}</div></div>`:"";
+  return row("The place",`${c.founded}. ${c.site}. ${c.roll}${c.board?` \u00b7 ${c.board}`:""}.`)
+   +row("Ethos",c.ethos)+row("Known for",c.known)
+   +row("Who thrives",c.thrives)+row("Where the friction is",c.friction)
+   +row("What to ask on the day",c.tell)
+   +`<p class="small">Foundation, site, roll and specialisms are published facts; "who thrives" and "friction" are structural inference from the school's gates and shape, not opinion or review.</p>`;}
+
+/* ---------- small stat visuals for the details sheet ---------- */
+const RETN={med:84.2,p10:71.9,p90:92.3,yr:"2023/24",exitMed:8.6,moveMed:6.6};
+const SESM={a:57.20,b:-38.77,sd:7.70,r2:0.332,n:3196};
+function sesBand(r){
+  return r>=5?["Well above what its intake predicts","#147D74","var(--teal-soft)"]
+    :r>=2?["Above what its intake predicts","#147D74","var(--teal-soft)"]
+    :r>-2?["About what its intake predicts","#5A6B7C","#EDF1F3"]
+    :r>-5?["Below what its intake predicts","#B97F10","#F7EEDB"]
+    :["Well below what its intake predicts","#A5372C","#F6E7E4"];}
+function retBand(r){
+  return r>=RETN.p90?["Unusually stable staff","#147D74","var(--teal-soft)"]
+    :r>=RETN.med?["Stable staff","#147D74","var(--teal-soft)"]
+    :r>=RETN.p10?["Below the national median","#B97F10","#F7EEDB"]
+    :["High staff turnover","#A5372C","#F6E7E4"];}
+function vizRet(s){
+  if(s.ret==null)return"";
+  const[lab,col,bg]=retBand(s.ret);
+  const lo=55,hi=100,X=v=>Math.max(1,Math.min(99,(v-lo)/(hi-lo)*100));
+  const bars=(s.retS||[]).map(([y,r])=>`<div style="flex:1;text-align:center">
+      <div style="height:${Math.max(4,Math.round((r-50)/50*40))}px;background:${col};opacity:.75;border-radius:2px 2px 0 0;margin:0 3px"></div>
+      <div class="note" style="font-size:.7rem">${y}<br><b>${r}%</b></div></div>`).join("");
+  return`<div style="margin:.6rem 0;padding:.55rem .6rem;border-radius:8px;background:${bg}">
+    <div style="font-size:.8rem;font-weight:700;color:${col}">${lab}</div>
+    <div class="note" style="margin:.15rem 0 .4rem"><b>${s.ret}%</b> of its teachers stayed on to the next year, averaged over three years \u2014 against a national median of <b>${RETN.med}%</b> for state secondaries. ${s.ret<RETN.p10?"That puts it in the bottom tenth nationally.":s.ret>=RETN.p90?"That puts it in the top tenth nationally.":""}</div>
+    <div style="display:flex;align-items:flex-end;gap:2px;height:64px">${bars}</div>
+    ${s.exit!=null?`<div class="note" style="margin-top:.35rem"><b>Where the leavers went.</b> ${s.exit}% of its teachers left teaching altogether each year (national median ${RETN.exitMed}%), and ${s.move}% moved to a different school (median ${RETN.moveMed}%). ${s.exit>=13&&s.move>=11?"Both routes run high \u2014 people are leaving in every direction.":s.exit>=13?"The exits are mostly out of the profession, not to another school \u2014 the pattern you'd expect where the job itself is grinding people down.":s.move>=11?"Mostly moves to other schools rather than exits from teaching \u2014 people are leaving this school, not the job.":"Both routes sit near the national norm."}</div>`:""}
+    <div class="note" style="margin-top:.3rem">Teachers leaving is a <b>leading</b> indicator \u2014 it shows up years before results do, and a new intake feels it first in Year 7. Small schools swing more: this one had about ${s.fte} full-time-equivalent teachers. School Workforce Census, ${RETN.yr} and the two years before.</div></div>`;}
+function vizSES(s){
+  if(s.dis==null||s.res==null)return"";
+  const[lab,col,bg]=sesBand(s.res);
+  const lo=28,hi=64,X=v=>Math.max(2,Math.min(96,(v-lo)/(hi-lo)*100));
+  const xa=X(s.a8),xp=X(s.pred);
+  return`<div style="margin:.6rem 0;padding:.55rem .6rem;border-radius:8px;background:${bg}">
+    <div style="font-size:.8rem;font-weight:700;color:${col}">${lab}</div>
+    <div class="note" style="margin:.15rem 0 .4rem"><b>${s.dis}%</b> of its pupils are disadvantaged. Nationally that predicts an Attainment 8 of <b>${s.pred}</b>; it scores <b>${s.a8}</b> \u2014 a gap of <b>${s.res>0?"+":""}${s.res}</b></div>
+    <div style="position:relative;height:15px">
+      <div style="position:absolute;left:0;right:0;top:7px;height:2px;background:#D9E0E4"></div>
+      <div style="position:absolute;left:${Math.min(xa,xp)}%;width:${Math.abs(xa-xp)}%;top:7px;height:2px;background:${col}"></div>
+      <div style="position:absolute;left:${xp}%;top:1px;width:2px;height:13px;background:#8A9BA8"></div>
+      <div style="position:absolute;left:${xa}%;top:2px;width:11px;height:11px;border-radius:50%;background:${col};transform:translateX(-5px)"></div>
+    </div>
+    <div class="tlab"><span>\u2502 predicted from intake</span><span>\u25cf actual</span></div>
+    <div class="note" style="margin-top:.3rem">From a national fit across ${SESM.n.toLocaleString()} state secondaries: every 10 points of disadvantaged intake is worth about ${Math.abs(SESM.b/10).toFixed(1)} Attainment 8 points. Intake explains only a third of the variation (R\u00b2 ${SESM.r2.toFixed(2)}), so treat gaps under ~3 as noise. One year, one cohort, and it describes a pattern \u2014 it doesn't prove a cause.</div></div>`;}
+function vizTrack(v,lo,hi,lbl,sub,other){
+  if(v==null)return`<div class="note" style="margin:.3rem 0">${lbl}: not published for this school \u2014 a gap, not a zero.</div>`;
+  const pc=Math.max(2,Math.min(98,(v-lo)/(hi-lo)*100));
+  const opc=other!=null?Math.max(2,Math.min(98,(other-lo)/(hi-lo)*100)):null;
+  return`<div style="margin:.55rem 0">
+    <div style="display:flex;justify-content:space-between;font-size:.7rem"><span style="font-weight:600">${lbl}</span><span style="font-variant-numeric:tabular-nums"><b>${v}</b> <span style="color:var(--marine-soft)">${sub||""}</span></span></div>
+    <div class="track" style="margin:.3rem 0 .1rem">${opc!=null?`<div class="gdot" style="left:${opc}%"></div>`:""}<div class="dot" style="left:${pc}%"></div></div>
+    <div class="tlab"><span>area low</span><span>area high</span></div></div>`;}
+function vizBar(v,max,lbl,val,col,note){
+  if(v==null)return"";
+  return`<div style="margin:.5rem 0">
+    <div style="display:flex;justify-content:space-between;font-size:.7rem"><span style="font-weight:600">${lbl}</span><span style="font-variant-numeric:tabular-nums">${val}</span></div>
+    <div class="rail" style="height:11px;margin:.25rem 0 .1rem"><div class="band" style="left:0;width:${Math.min(100,v/max*100)}%;background:${col||"#147D74"}"></div></div>
+    ${note?`<div class="note">${note}</div>`:""}</div>`;}
+function vizDest(d16,b5){
+  if(!d16)return"";
+  const[c,o,f,ns]=d16;
+  return`<div style="margin:.5rem 0">
+    <div style="display:flex;justify-content:space-between;font-size:.7rem"><span style="font-weight:600">Where its leavers go at 16</span><span>grade 5+ E&amp;M <b>${b5}%</b></span></div>
+    <div class="rail" style="height:12px;margin:.25rem 0 .15rem;background:#F3EFE6">
+      <div class="band" style="left:0;width:${c}%;background:#147D74;opacity:.85"></div>
+      <div class="band" style="left:${c}%;width:${o}%;background:#0E2A38;opacity:.75"></div>
+      <div class="band" style="left:${c+o}%;width:${f}%;background:#B97F10;opacity:.6"></div></div>
+    <div class="tlab"><span>${c}% colleges</span><span>${o}% own sixth</span><span>${f}% FE \u00b7 ${ns}% not sustained</span></div></div>`;}
+function vizOdds(lo,hi){
+  return`<div style="margin:.5rem 0">
+    <div style="display:flex;justify-content:space-between;font-size:.7rem"><span style="font-weight:600">Your chance of an offer</span><span style="font-variant-numeric:tabular-nums"><b>${Math.round(lo*100)}\u2013${Math.round(hi*100)}%</b></span></div>
+    <div class="rail" style="height:14px;margin:.25rem 0 .1rem"><div class="band ${hi<=.5?"low":""}" style="left:${lo*100}%;width:${Math.max(2,(hi-lo)*100)}%"></div></div>
+    <div class="tlab"><span>0%</span><span>certain</span></div></div>`;}
+
+/* ---------- cross-sector comparison: works when one side has no DfE measures ---------- */
+function xsCompare(a,b){
+  const nameOf=k=>S[k]?S[k].name:((PRIV.find(p=>p.id===k)||{}).name||k);
+  const priv=k=>PRIV.find(p=>p.id===k);
+  const dash='<span style="color:#B7C2C9">not comparable</span>';
+  const cost=k=>{const p=priv(k);return p?`<b>\u00a3${Math.round(p.fee1/1000)}k\u2013\u00a3${Math.round(p.feePeak/1000)}k</b>/yr \u00b7 \u2248${gross(p.fee1)} pre-tax`:"<b>Free</b>";};
+  const gate=k=>{const p=priv(k);if(p)return p.entry.replace(/<[^>]+>/g,"");
+    if(!ck)return"catchment / distance";
+    const[[lo,hi],note]=pOffer(k,statusFor(k,ck),fsm,sib);
+    return `<b>${Math.round(lo*100)}\u2013${Math.round(hi*100)}%</b> from your address \u2014 ${note}`;};
+  const age=k=>{const p=priv(k);return p?p.age:(S[k]&&S[k].sf?"11-18":"11-16");};
+  const at16=k=>{const p=priv(k);if(p)return p.age.endsWith("16")?"ends at 16 \u2192 the colleges":"own sixth form";
+    return S[k]&&S[k].sf?"own sixth form":"\u2192 BHASVIC / Varndean College";};
+  const res=k=>{const p=priv(k);
+    if(p)return p.res.replace(/<[^>]+>/g,"");
+    const a=a8of(k);return a!=null?`Attainment 8 <b>${a}</b>${S[k].p8?` \u00b7 Progress 8 <b>${S[k].p8}</b>`:""}`:dash;};
+  const cult=k=>CULT[k]?CULT[k].ethos:(S[k]?S[k].ch.replace(/<[^>]+>/g,""):"");
+  const thrive=k=>CULT[k]?CULT[k].thrives:dash;
+  const rows=[["Cost",cost],["Age range",age],["Getting in",gate],["Results",res],["At 16",at16],["Character",cult],["Who thrives",thrive]];
+  return`<table style="table-layout:fixed"><tr><th style="width:22%"></th><th style="text-align:left">${nameOf(a)}</th><th style="text-align:left">${nameOf(b)}</th></tr>
+    ${rows.map(([l,f])=>`<tr><td style="font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--marine-soft)">${l}</td><td style="text-align:left;font-size:.8rem">${f(a)}</td><td style="text-align:left;font-size:.8rem">${f(b)}</td></tr>`).join("")}
+  </table>
+  <p class="small">Where a school is fee-paying, DfE progress, intake and destination measures either aren't published or aren't comparable (most independents sit outside Progress 8 and many use iGCSEs) \u2014 so this compares what genuinely can be compared, including the price of entry and the gate itself.</p>`;}
+function anyCompare(a,b,elId){
+  const el=document.getElementById(elId);if(!el)return;
+  const isPriv=k=>!!PRIV.find(p=>p.id===k);
+  if(isPriv(a)||isPriv(b)){el.innerHTML=xsCompare(a,b);return;}
+  drawRadar(a,b,elId);}
+
+/* ---------- per-school drill-down ---------- */
+function showSchool(k){
+  const s=S[k],p=(typeof PRIV!=="undefined")?PRIV.find(x=>x.id===k):null;
+  const nm=s?s.name:(p?p.name:k);const secs=[];
+  if(s){
+    const a8=a8of(k),oth=otherA8(k),f=(typeof FIT!=="undefined")?FIT[k]:null;
+    const p8v=parseFloat(String(s.p8||"").replace("\u2212","-"));
+    let viz="";
+    if(ck){const st=statusFor(k,ck),[[lo,hi],note]=pOffer(k,st,fsm,sib);
+      const ctx=(s.r1!=null&&district&&DISTRICTS[district].modelled)
+        ?`<div class="note" style="margin-top:.4rem"><b>For context:</b> across the whole council area, ${Math.round(s.r1*100)}% of families who put this school first were offered a place in the ${s.ryr?s.ryr.slice(0,4)+"\u2013"+s.ryr.slice(4):"latest"} round. That is an average over every applicant; the range above is for your address.</div>`:"";
+      if(s.nocatch)secs.push(["Your chance",`<div class="catch" style="margin:0 0 .5rem"><b>This school has no catchment area.</b> West Sussex lists it among the schools that don't use a council-defined catchment \u2014 it sets its own criteria (a parish or church area, or distance alone), so living nearby gives you no automatic priority. Check the school's own policy.</div>`]);
+    secs.push(["Your chance",vizOdds(lo,hi)+`<div class="note" style="margin-top:-.2rem">${note}.</div>`+ctx]);}
+    viz+=vizTrack(a8,34,62,"Attainment 8",sex!=="na"?(sex==="girl"?"girls (triangle = boys)":"boys (triangle = girls)"):"all pupils",oth);
+    viz+=isNaN(p8v)?"":vizTrack(p8v,-0.8,0.9,"Progress 8","from the same starting point");
+    viz+=vizTrack(s.b5??null,20,80,"Grade 5+ English &amp; maths","the college course currency");
+    if(s.eb!=null)viz+=vizTrack(s.eb,10,80,"EBacc entry","share taking the academic core");
+    if(s.abs&&s.abs[0]!=null)viz+=vizBar(s.abs[0],20,"Absence",`${s.abs[0]}% overall${s.abs[1]!=null?` \u00b7 ${s.abs[1]}% persistent`:""}`,s.abs[0]<9?"#147D74":s.abs[0]<12?"#8A9BA8":"#B97F10","Area range roughly 7% to 15%.");
+    if(f&&f.fsm!=null)viz+=vizBar(f.fsm,55,"Intake \u2014 free school meals (ever)",`${f.fsm}%${f.eal!=null?` \u00b7 EAL ${f.eal}%`:""}`,"#5A6B7C","Who actually gets in, from the official census \u2014 not the catchment's demographics. Area range 18% to 50%.");
+    viz+=vizDest(s.d16,s.b5);
+    secs.push(["The numbers, in position",viz+vizSES(s)+vizRet(s)+`<div class="note">Scales are the local range \u2014 right edge = strong for this area. Triangle = the other sex.</div>`]);
+    if(typeof RAD!=="undefined"||true){
+      const comp=(order.find(o=>o!==k))||(districtKeys().find(o=>o!==k&&typeof S[o].a8==="number"));
+      const feeOpts=[],stateOpts=[];
+      if(false)secs.push(["Against another school",`<div style="display:flex;gap:.4rem;margin-bottom:.3rem"><select id="drillcmp" onchange="anyCompare('${k}',this.value,'raddrill')" style="flex:1;min-width:0;padding:.4rem;font-size:.8rem;border:1.5px solid var(--line);border-radius:8px;background:var(--chalk)"><optgroup label="Free schools">${stateOpts.map(o=>`<option value="${o}"${o===comp?" selected":""}>${S[o].name}</option>`).join("")}</optgroup>${feeOpts.length?`<optgroup label="Fee-paying">${feeOpts.map(o=>`<option value="${o}">${PRIV.find(pp=>pp.id===o).name}</option>`).join("")}</optgroup>`:""}</select></div><div id="raddrill"></div>`]);}
+    const w=walkInfo(document.getElementById("pc").value,k);
+    if(w)secs.push(["From your address",w.bus?`\u2248${w.km} km \u2014 bus territory.`:`\u2248${w.mins} min walk.`]);
+    if(k==="kings"){const kn=kingsNode(document.getElementById("pc").value);
+      secs.push(["How King's measures distance",`Two admissions nodes, not one. <b>${KINGS_NODES.hove.share}%</b> of places are allocated by distance from the <b>Hove node</b> (Richardson Rd / New Church Rd) and <b>${KINGS_NODES.wb.share}%</b> from the school itself in West Blatchington. Faith places are capped at 50% and alternate with open places.${kn?` You are <b>${kn.km.toFixed(1)} km</b> from the ${kn.key==="hove"?"Hove":"West Blatchington"} node (the other is ${kn.other.toFixed(1)} km). Recent last-offered distances there: open ~${kn.open} km, faith ~${kn.faith} km \u2014 cut-offs move year to year.`:""} This is why walking distance to the building can mislead: your odds run off the node, not the front door.`]);}
+    secs.push(["Inspection",s.insp]);
+    if(Object.keys(fitAns).length){const cl=fitVerdict(k),sc=fitScore(k);
+      if(sc!=null)secs.push(["Fit for your child",
+        `<div style="display:flex;align-items:center;gap:.6rem"><span style="flex:none;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;background:${sc>=75?"var(--teal-soft)":sc>=55?"#F7EEDB":"#EDF1F3"};color:${sc>=75?"var(--teal)":sc>=55?"var(--amber)":"var(--marine-soft)"}">${sc}</span>
+        <span style="font-size:.875rem">${sc>=75?"A natural fit on what you told us.":sc>=55?"Workable, with one or two things to weigh.":"An outlier for your answers \u2014 which can still be the right call."}</span></div>`
+        +(cl&&cl.length?`<div class="note" style="margin-top:.4rem">Worth knowing: ${cl.join("; and ")}.</div>`:"")]);}
+    if(CULT[k])secs.push(["The school itself",cultureBlock(k)]);
+    secs.push(["Visit it","Open evenings run September to early October; dates are usually published in July on the school's own site. One visit outweighs any number on this page \u2014 watch the corridors between lessons, not the presentation."]);
+    if(s.xc)secs.push(["Clubs &amp; activities",s.xc.line]);
+    if(f&&f.pool)secs.push(["Who you'd be joining",`${f.pool}<br><span style="font-size:.7rem">Basis: ${f.basis||""}</span>`]);
+  }
+  if(p){
+    if(CULT[k])secs.push(["The school itself",cultureBlock(k)]);
+    secs.push(["Fees",`\u00a3${Math.round(p.fee1/1000)}k\u2013\u00a3${Math.round(p.feePeak/1000)}k/yr (day, VAT in) \u2014 needs \u2248\u00a3${Math.round(p.fee1*1.72/1000)}k\u2013\u00a3${Math.round(p.feePeak*1.72/1000)}k of pre-tax salary per year, per child. Sibling discounts and means-tested bursaries: always ask.`]);
+    secs.push(["Results",p.res]);secs.push(["Getting in",p.entry]);
+    secs.push(["Visit it","Open mornings run through the autumn; registration deadlines for 11+ entry are typically the autumn of Year 6."]);}
+  const cmpFee=feeSchools().filter(pp=>pp.id!==k).map(pp=>pp.id);
+  const cmpState=districtKeys().filter(o=>o!==k);
+  if(cmpState.length||cmpFee.length){
+    const first=cmpState[0]||cmpFee[0];
+    secs.push(["Against another school",`<div style="display:flex;gap:.4rem;margin-bottom:.3rem"><select id="drillcmp" onchange="anyCompare('${k}',this.value,'raddrill')" style="flex:1;min-width:0;padding:.4rem;font-size:.8rem;border:1.5px solid var(--line);border-radius:8px;background:var(--chalk)">`
+      +`<optgroup label="Free schools">${cmpState.map(o=>`<option value="${o}"${o===first?" selected":""}>${S[o].name}</option>`).join("")}</optgroup>`
+      +(cmpFee.length?`<optgroup label="Fee-paying">${cmpFee.map(o=>`<option value="${o}"${o===first?" selected":""}>${PRIV.find(pp=>pp.id===o).name}</option>`).join("")}</optgroup>`:"")
+      +`</select></div><div id="raddrill"></div>`]);}
+  const PRIO=["Fit for your child","Your chance","The school itself","The numbers, in position","How King's measures distance","From your address","Inspection","Clubs &amp; activities","Who you'd be joining","Fees","Results","Getting in","At 16","Visit it","Against another school"];
+  secs.sort((a,b)=>{const ia=PRIO.findIndex(t=>a[0].startsWith(t)),ib=PRIO.findIndex(t=>b[0].startsWith(t));return (ia<0?99:ia)-(ib<0?99:ib);});
+  document.getElementById("modalbody").innerHTML=`<h2 style="font-size:1.2rem">${nm}</h2>`
+    +secs.map(([t,b])=>`<h3 style="font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--marine-soft);margin:.8rem 0 .2rem">${t}</h3><div style="font-size:.875rem">${b}</div>`).join("")
+    +`<p class="small" style="margin-top:1rem">All from official data or published policies. Nothing replaces an open evening.</p>`;
+  document.getElementById("modal").style.display="flex";document.body.style.overflow="hidden";
+  const dc=document.getElementById("drillcmp");if(dc)anyCompare(k,dc.value,"raddrill");}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElementById("modal").style.display==="flex")hideSchool();});
+function hideSchool(){document.getElementById("modal").style.display="none";document.body.style.overflow="";}
+
+/* ---------- private options, fees, routes ---------- */
+let PRIV=[];
+const GROSSM=1.72;
+const gross=v=>"\u00a3"+Math.round(v*GROSSM/1000)+"k";
+const ROUTES=[
+ ["State 11-16 \u2192 college",0,0,"free"],
+ ["Brighton College 11-18",279000,39777,"bc"],
+ ["Brighton College 11-16 \u2192 college",180000,39777,"bc"],
+ ["Brighton Girls 11-16 \u2192 college",102500,20500,"bg"],
+ ["Shoreham College 11-16 \u2192 college",97500,19500,"sho"],
+ ["LOGS 11-18",167000,21744,"logs"],
+ ["State 11-13 \u2192 Lancing 13+ \u2192 own sixth",236000,39330,"lan"]];
+
+/* ---------- full-field comparison matrix + fee timeline ---------- */
+function cmpField(){
+  const stateKeys=districtKeys().filter(k=>!(FIT[k]&&FIT[k].girls&&sex==="boy"));
+  const priv=feeSchools();
+  const rows=[];
+  const dash='<span style="color:#B7C2C9">\u2014</span>';
+  const cellState=k=>{const s=S[k],f=FIT[k]||{};
+    const a8=a8of(k);
+    const p8v=parseFloat(String(s.p8||"").replace("\u2212","-"));
+    const bar=v=>v==null?dash:`<span style="display:inline-block;width:52px;height:7px;background:#EDF1F3;border-radius:4px;position:relative;vertical-align:middle"><span style="position:absolute;left:0;top:0;bottom:0;width:${Math.max(3,Math.min(100,(v-34)/28*100))}%;background:#147D74;border-radius:4px"></span></span> ${v}`;
+    return[s.name,"Free",bar(a8),s.res!=null?`<b style="color:${s.res>=2?"#147D74":s.res<=-2?"#B97F10":"#5A6B7C"}">${s.res>0?"+":""}${s.res}</b>`:dash,s.ret!=null?`<b style="color:${s.ret>=RETN.p90?"#147D74":s.ret<RETN.p10?"#A5372C":"#5A6B7C"}">${s.ret}%</b>`:dash,isNaN(p8v)?dash:(p8v>0?"+"+p8v:p8v),s.b5!=null?s.b5+"%":dash,s.eb!=null?s.eb+"%":dash,
+      s.d16?s.d16[0]+"% / "+s.d16[1]+"%":dash,s.abs&&s.abs[0]!=null?s.abs[0]+"%":dash,
+      f.fsm!=null?f.fsm+"%":dash,s.sf?"Own sixth":"Colleges",
+      (ck?Math.round(pOffer(k,statusFor(k,ck),fsm,sib)[0][0]*100)+"\u2013"+Math.round(pOffer(k,statusFor(k,ck),fsm,sib)[0][1]*100)+"%":dash)];};
+  const cellPriv=p=>{const money=`<span style="display:inline-block;width:52px;height:7px;background:#F7EEDB;border-radius:4px;position:relative;vertical-align:middle"><span style="position:absolute;left:0;top:0;bottom:0;width:${Math.min(100,p.fee1/40000*100)}%;background:#B97F10;border-radius:4px"></span></span> \u00a3${Math.round(p.fee1/1000)}k`;
+    return[p.name,money,dash,dash,dash,dash,dash,dash,p.age.endsWith("16")?"\u2014 / 0%":dash,dash,dash,p.age.endsWith("16")?"Colleges":"Own sixth",
+      p.entry.replace(/<[^>]+>/g,"").split(";")[0].slice(0,28)];};
+  stateKeys.forEach(k=>rows.push(cellState(k)));
+  priv.forEach(p=>rows.push(cellPriv(p)));
+  const heads=["School","Cost/yr","Attainment 8","vs intake","Staff kept","P8","5+ E&amp;M","EBacc entry","\u219216: college/own","Absence","Intake FSM","At 16","Your odds / gate"];
+  return`<div style="overflow-x:auto"><table style="min-width:640px"><thead><tr>${heads.map((h,i)=>`<th style="text-align:${i?"right":"left"}">${h}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td style="text-align:${i?"right":"left"};white-space:nowrap">${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+   <p class="small">Free first, then by price. Teal = attainment, amber = cost. "vs intake" is Attainment 8 against what a school with that share of disadvantaged pupils scores nationally; "staff kept" is the three-year average share of teachers staying on (national median ${RETN.med}%). Independent schools are outside the workforce census, so those cells are blank by definition. Blank cells aren't published on a comparable basis \u2014 <b>a data gap, not a verdict</b>. Odds are yours; for fee schools the same column shows the entry gate instead.</p>`;}
+
+function feeTimeline(sel){
+  const p=PRIV.find(x=>x.id===sel)||PRIV[0];
+  if(!p)return`<div class="card"><p class="sub" style="margin:0">We don't hold fee-paying schools for this area yet \u2014 the free pathway above is complete on its own.</p></div>`;
+  const startY=({y6:2027,y5:2028,"y4-":2029,sec:2026})[yr]||2027;
+  const yrs=[];const start11=p.age.startsWith("13")?2:0;
+  const endAge=p.age.endsWith("16")?5:7;
+  for(let i=0;i<7;i++){
+    const inSchool=i>=start11&&i<endAge;
+    const fee=inSchool?p.fee1+(p.feePeak-p.fee1)*(i/6):0;
+    yrs.push({label:"Y"+(7+i),year:startY+i,fee:fee*nkids,inSchool});}
+  let cum=0;const cums=yrs.map(y=>cum+=y.fee);
+  const peak=Math.max(...yrs.map(y=>y.fee),1),total=cum;
+  const W=340,H=180,L=34,B=30;
+  const bw=(W-L-10)/7;
+  const bars=yrs.map((y,i)=>{const h=y.fee/peak*(H-B-30),x=L+i*bw,ytop=H-B-h;
+    return`${y.inSchool?`<rect x="${x+3}" y="${ytop}" width="${bw-6}" height="${h}" fill="#B97F10" opacity=".75" rx="2"/>`
+      :`<rect x="${x+3}" y="${H-B-6}" width="${bw-6}" height="6" fill="#E3F0EE" rx="2"/>`}
+      <text x="${x+bw/2}" y="${H-B+11}" font-size="7" text-anchor="middle" fill="#3E5766">${y.label}</text>
+      <text x="${x+bw/2}" y="${H-B+19}" font-size="6" text-anchor="middle" fill="#8A9BA8">${y.year}</text>`;}).join("");
+  const line="M"+cums.map((c,i)=>`${L+i*bw+bw/2},${H-B-(c/total)*(H-B-30)}`).join("L");
+  const opts=feeSchools().map(x=>`<option value="${x.id}"${x.id===p.id?" selected":""}>${x.name}</option>`).join("");
+  return`<select id="tlsel" onchange="tlSel=this.value;renderFin()" style="width:100%;min-width:0;padding:.45rem;font-size:.875rem;border:1.5px solid var(--line);border-radius:8px;background:var(--chalk);margin-bottom:.4rem">${opts}</select>
+   <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:520px">
+    ${bars}<path d="${line}" fill="none" stroke="#0E2A38" stroke-width="1.6" stroke-dasharray="4,3"/>
+    ${cums.map((c,i)=>`<circle cx="${L+i*bw+bw/2}" cy="${H-B-(c/total)*(H-B-30)}" r="2.2" fill="#0E2A38"/>`).join("")}
+    <text x="4" y="18" font-size="7.5" fill="#B97F10">annual fee (bars)</text>
+    <text x="4" y="28" font-size="7.5" fill="#0E2A38">cumulative (line)</text>
+    <text x="${W-4}" y="18" font-size="8" text-anchor="end" font-weight="700" fill="#0E2A38">\u00a3${Math.round(total/1000)}k total</text>
+    <text x="${W-4}" y="28" font-size="7.5" text-anchor="end" fill="#3E5766">\u2248${gross(total)} of pre-tax earnings</text>
+   </svg>
+   <p class="small">${p.name}${nkids>1?` \u00d7 ${nkids} children`:""}, Year 7 from ${startY}, VAT in, ~3%/yr drift. Pale stubs = years this school doesn't cover. The line is the planning number; the tallest bar has to survive a bad year.</p>`;}
+
+function renderFin(){
+  const gate=feeGate;
+  const s6l=document.getElementById("step6label");
+  if(s6l)s6l.textContent=gate==="no"?"Step 6 of 6 — What a place costs":"Step 6 of 6 — Fee-paying options (optional)";
+  const g=document.querySelector('input[name="pgate"][value="'+gate+'"]');if(g)g.checked=true;
+  const el=document.getElementById("finflow");if(!el)return;
+  const bw=document.getElementById("budwrap");if(bw)bw.style.display=gate==="no"?"none":"block";
+  const e16=document.getElementById("ehcp16");
+  if(e16)e16.innerHTML=ehcp?`<b>EHCP at 16:</b> with a college named in the plan, the EHCP consultation process overrides normal admissions \u2014 no priority-date race \u2014 but the college must be able to meet the plan's needs, and course entry requirements still apply. Start that conversation with the SEND team in Year 10.`:"";
+
+  if(gate==="no"){
+    el.innerHTML=priceBlock()
+      +`<div class="card"><p class="sub" style="margin:0"><b>That's the free pathway \u2014 and it's the whole picture.</b> ${PPD[ck]?"The prices above are here because moving is the other way families buy a school place. ":""}Switch to \u201cMaybe\u201d above if you ever want the fee routes priced.</p></div>`;
+    return;}
+
+  const dfee=district?DISTRICTS[district].fee:null;
+  if(gate!=="no"&&(!dfee||!dfee.length)){
+    el.innerHTML=priceBlock()+`<div class="card"><h2>Fee-paying options</h2>
+      <p class="sub" style="margin:0">We don't cover fee-paying schools in this area yet. Everything in steps 1\u20135 \u2014 your odds, the results, the intake-adjusted scores and the real offer rates \u2014 is complete without them.</p></div>`;
+    return;}
+  const visible=feeSchools().filter(p=>(!dfee||dfee.includes(p.id)));
+  const chip=p=>{if(budget==null)return"";
+    return p.fee1<=budget?'<span class="chip sf">WITHIN BUDGET</span>':p.fee1<=budget*1.3?'<span class="chip faith">STRETCH</span>':'<span class="chip">OVER BUDGET</span>';};
+  const optsInner=visible.map(p=>`<div class="sc" style="cursor:default"><div class="top"><span class="nm">${p.name}</span><span class="chip">${p.age}</span></div>
+    <div class="note" style="margin-top:.25rem"><b>\u00a3${Math.round(p.fee1/1000)}k\u2013\u00a3${Math.round(p.feePeak/1000)}k/yr</b> (day, VAT in) \u2014 needs \u2248${gross(p.fee1)}\u2013${gross(p.feePeak)} of pre-tax salary a year, per child ${chip(p)}${p.girls?'<span class="chip faith">GIRLS ONLY</span>':''}</div>
+    <div class="note">${p.res}</div><div class="note">${p.entry}</div>${p.note?`<div class="note" style="font-style:italic">${p.note}</div>`:""}
+    <div class="note" style="margin-top:.25rem"><a href="#" onclick="event.preventDefault();showSchool('${p.id}')" style="color:var(--teal);font-weight:700;text-decoration:none">Full details \u2192</a></div></div>`).join("");
+
+  // ---- YOUR routes, on the real calendar ----
+  const y7=({y6:2027,y5:2028,"y4-":2029,sec:2026})[yr]||2027;   // the September they start Year 7
+  const yrs=[...Array(7)].map((_,i)=>y7+i);               // Y7..Y13
+  const YG=["Y7","Y8","Y9","Y10","Y11","Y12","Y13"];
+  const mine=order.length?order:(districtKeys().slice(0,1));
+  const feeSel=(district?DISTRICTS[district].fee:[]).filter(id=>PRIV.find(p=>p.id===id)).slice(0,3);
+  const trackRow=(label,segs,note)=>{
+    let col=2;
+    const cells=segs.map(sg=>{const s=`grid-column:${col} / span ${sg.n};`;col+=sg.n;
+      return`<div style="${s}min-height:30px;border-radius:4px;background:${sg.bg};color:${sg.fg};font-size:.7rem;line-height:1.2;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:600;padding:2px 3px;overflow:hidden">${sg.t||""}</div>`;}).join("");
+    return`<div style="display:grid;grid-template-columns:74px repeat(7,1fr);gap:2px;align-items:center;margin:.3rem 0">
+      <div style="font-size:.7rem;font-weight:700;line-height:1.15;padding-right:.2rem">${label}</div>${cells}</div>
+      ${note?`<div class="note" style="margin:-.15rem 0 .4rem 76px">${note}</div>`:""}`;};
+  const ST={bg:"var(--teal-soft)",fg:"var(--teal)"},PV={bg:"var(--amber-soft)",fg:"var(--amber)"},CO={bg:"#E7ECEF",fg:"#3E5766"};
+  const stateRows=mine.slice(0,4).map((k,i)=>{
+    const s=S[k];if(!s)return"";
+    const segs=[{...ST,n:5,t:ABBR[k]||s.name},
+      s.sf?{...ST,n:2,t:"its own<br>sixth form"}:{...CO,n:2,t:"the<br>colleges"}];
+    const d=s.d16;
+    const note=(s.sf&&d)?`GCSEs ${yrs[4]+1}. ${d[1]}% of its leavers stayed for its own sixth form; ${d[0]}% went to the colleges.`
+      :(d?`GCSEs ${yrs[4]+1}, then it ends \u2014 ${d[0]}% of its leavers went to BHASVIC or Varndean College.`
+        :`GCSEs ${yrs[4]+1}.`);
+    return trackRow(`${i+1}. ${ABBR[k]||s.name}`,segs,note);});
+  const feeRows=feeSel.map(id=>{
+    const p=PRIV.find(x=>x.id===id);
+    const from13=/13\+/.test(p.entry), ends16=p.age.endsWith("16");
+    const segs=[];
+    if(from13){segs.push({...ST,n:2,t:"a state school"});segs.push({...PV,n:3,t:p.name.split(" ")[0]});}
+    else segs.push({...PV,n:5,t:p.name});
+    segs.push(ends16?{...CO,n:2,t:"the<br>colleges"}:{...PV,n:2,t:"its own<br>sixth form"});
+    const note=from13?`13+ entry \u2014 Years 7 and 8 happen somewhere else, applied for separately.`
+      :(ends16?`Ends at 16 \u2014 from ${yrs[5]} the sixth form is the same free colleges as the state route.`:`Stays to 18.`);
+    return trackRow(p.name,segs,note);}).join("");
+  const ruler=`<div style="display:grid;grid-template-columns:78px repeat(7,1fr);gap:2px;margin-bottom:.15rem">
+      <div></div>${YG.map((g,i)=>`<div style="text-align:center;font-size:.7rem;color:var(--marine-soft);font-weight:700">${g}<br><span style="font-weight:400">${yrs[i]}\u2013${String(yrs[i]+1).slice(2)}</span></div>`).join("")}</div>`;
+  const gcseYr=yrs[4]+1, alevYr=yrs[6]+1;
+  const paths=`<p class="sub" style="margin-bottom:.5rem">Your list, on the real calendar. <b>GCSEs in summer ${gcseYr}</b>; if they stay to 18, <b>A-levels in ${alevYr}</b>.</p>`
+   +ruler+stateRows.join("")+(feeRows?`<div class="note" style="margin:.5rem 0 .2rem;font-weight:700">If you paid instead</div>`+feeRows:"")
+   +`<p class="small"><b>Where the roads meet:</b> 77% of Stringer and 74% of Varndean leavers reach the same two colleges, and every school above that ends at 16 \u2014 free or fee-paying \u2014 arrives at the same place in ${yrs[5]}. Cardinal Newman, which keeps about half its cohort, is the real exception. Fees mostly buy the <b>11\u201316 leg</b>, not a different destination at 18.</p>`;
+
+  const rows=ROUTES.filter(r=>r[3]==="free"||visible.some(p=>p.id===r[3]))
+   .sort((a,b)=>a[1]-b[1])
+   .map(([n,tot,peak,id])=>`<tr><td>${n}</td><td>${tot?"\u00a3"+Math.round(tot*nkids/1000)+"k":"\u00a30"}</td><td>${tot?gross(tot*nkids):"\u2014"}</td></tr>`).join("");
+  const fees=`${feeTimeline(tlSel)}<h3 style="font-size:.875rem;margin-top:1rem">Every route, priced to 18</h3><table><thead><tr><th>Route to 18</th><th>Cash${nkids>1?` (\u00d7${nkids})`:""}</th><th>Pre-tax earnings</th></tr></thead><tbody>${rows}</tbody></table>
+   <p class="small">Published 2026-27 day fees, VAT in, ~3%/yr drift. Pre-tax = \u00d71.72 (higher rate). Cost information, not financial advice.</p>`;
+
+
+  const compare=`<div class="cmp">${cmpField()}</div>`;
+
+  const worth=`<p style="font-size:.875rem">${verdictLevel==="safe"
+    ?"Your state list is protected \u2014 fees here would be a <b>purchase</b>, not insurance."
+    :"Your list carries risk \u2014 fees could be <b>insurance</b> as well as a purchase. The cheap version first: a \u00a3150\u2013300 private application."}</p>
+   <p class="small">Caveat: independents select their intake, so raw attainment flatters them; Progress 8 is fairer and mostly unpublished. Judge on visits and destinations.</p>`;
+
+  const kidsLine=nkids>1
+   ?`<b>The overlap is what breaks budgets:</b> a two-year gap means years paying ${nkids} sets of fees at once \u2014 at Brighton College roughly <b>\u00a380k/yr \u2248 \u00a3137k of salary</b>. Ask about sibling discounts (5\u201310%) and bursaries together.`
+   :`A second child doubles it \u2014 and the overlap years are what break budgets.`;
+  const afford=`<p style="font-size:.875rem">${budget!=null&&budget>0
+    ?`At \u00a3${budget.toLocaleString()}/yr, <b>${visible.filter(p=>p.fee1<=budget).length} of ${visible.length}</b> local fee-paying options sit inside budget${visible.filter(p=>p.fee1>budget&&p.fee1<=budget*1.3).length?`, ${visible.filter(p=>p.fee1>budget&&p.fee1<=budget*1.3).length} within a stretch`:""}.`
+    :"Add a budget above and this prices itself against the real options."}</p>
+   <p class="small">${kidsLine} The test is the <b>peak year</b> surviving one income falling away. Ask about bursaries before ruling anything out. Not financial advice.</p>`;
+
+  const timing=`<p class="small"><b>11+</b> buys the whole leg \u00b7 <b>13+</b> (Lancing/Hurst/Bede's) means the 11\u201313 leg happens elsewhere \u00b7 <b>16+</b> \u2014 weakest local purchase; BHASVIC is free and grade-B \u00b7 <b>Decide later</b> \u2014 the free default; revisit at 13 or 16.</p>`;
+
+  const TABS=[["paths","Pathways",paths],["schools","Schools",optsInner],["fees","Fees",fees],
+   ["compare","Compare",compare],["worth","Worth it?",worth],["afford","Afford",afford],["when","When?",timing]];
+  const cur=TABS.find(t=>t[0]===finTab)||TABS[0];
+  el.innerHTML=priceBlock()+`<div style="margin:.4rem 0 .6rem">${TABS.map(([id,l])=>`<span class="pchip${finTab===id?" on":""}" onclick="finTab='${id}';renderFin()">${l}</span>`).join("")}</div>
+    <div class="card">${cur[2]}</div>`;}
+
+/* ---------- fit: culture as the selection function, executed ---------- */
+let FIT={};
+const FITQS=[
+ ["pond","Would they rather be a small fish in a big pond, or known by name?",[["big","Big school, lots going on"],["small","Small, known by everyone"],["either","Either"]]],
+ ["style","What suits them day to day?",[["relaxed","Relaxed and creative"],["mixed","A bit of both"],["formal","Structured and traditional"]]],
+ ["celeb","What should the school celebrate about them?",[["academic","Academic ambition"],["sport","Sport"],["arts","Arts and performance"],["allround","Just being an all-rounder"]]],
+ ["comm","School-gate community, or happy to commute?",[["local","Local \u2014 friends nearby"],["wide","Happy to travel for the right fit"]]],
+ ["cont","One school to 18, or re-decide at 16?",[["cont","Continuity to 18"],["redecide","Re-decide at 16 \u2014 the colleges are good"]]]];
+let fitAns={};
+function drawFitQs(){
+  const el=document.getElementById("fitqs");if(!el)return;
+  el.innerHTML=FITQS.map(([k,q,opts])=>`<div style="margin:.5rem 0"><div style="font-size:.875rem;font-weight:600">${q}</div>
+    <div class="chipgrid${opts.length===3?"":""}">${opts.map(([v,l])=>`<span class="pchip${fitAns[k]===v?" on":""}" onclick="fitAns['${k}']='${v}';drawFitQs();renderFit()">${l}</span>`).join("")}</div></div>`).join("");}
+/* ---------- Fit Index: culture, quantified with a stated basis ---------- */
+const AXNAMES=["Structure","Academic intensity","Known by name","Breadth of offer","Local rootedness"];
+function fitAxes(k){  // 0-100 per axis, derived from FIT/CULT fields + data, with hand overrides where culture text says more
+  const f=FIT[k];if(!f)return null;
+  const structure={relaxed:28,mixed:52,formal:80}[f.form]||50;
+  const known={small:85,medium:62,big:38}[f.size]||50;
+  const local={local:82,city:55,county:25}[f.radius]||50;
+  let breadth=(f.celeb||[]).length*18+((S[k]&&S[k].xc)?22:10)+({big:20,medium:10,small:0}[f.size]||0);
+  let intensity=40;
+  const a8=S[k]&&typeof S[k].a8==="number"?S[k].a8:null;
+  if(a8!=null)intensity=20+((a8-34)/28)*55;
+  if((f.celeb||[]).includes("academic"))intensity+=14;
+  if(f.fee)intensity+=10;
+  const OVR={bc:{i:96,b:92},roe:{i:74,b:70},bg:{i:82,b:48},sho:{i:34,b:40},logs:{i:60,b:52},
+    lan:{i:70,b:84,s:86},bedes:{i:48,b:90},hurst:{i:78,b:88,s:78},bhg:{i:64,b:45},
+    kings:{i:88},cardinalnewman:{i:76},stpauls:{i:78}};
+  const o=OVR[k]||{};
+  return[o.s??structure,Math.round(Math.min(98,o.i??intensity)),known,Math.round(Math.min(98,o.b??breadth)),local];}
+function childPref(){  // desired axis values from the five answers; null = no preference expressed
+  const pf=[null,null,null,null,null];
+  if(fitAns.style)pf[0]={relaxed:25,mixed:50,formal:82}[fitAns.style];
+  if(fitAns.celeb)pf[1]={academic:85,allround:55,sport:50,arts:48}[fitAns.celeb];
+  if(fitAns.pond)pf[2]={small:85,big:35,either:null}[fitAns.pond];
+  if(fitAns.celeb)pf[3]={allround:75,sport:70,arts:70,academic:50}[fitAns.celeb];
+  if(fitAns.comm)pf[4]={local:80,wide:35}[fitAns.comm];
+  return pf;}
+function fitScore(k){
+  const ax=fitAxes(k),pf=childPref();if(!ax)return null;
+  let tot=0,n=0;
+  pf.forEach((p,i)=>{if(p==null)return;tot+=Math.abs(p-ax[i]);n++;});
+  let s=n?Math.round(100-(tot/n)*1.05):null;
+  // continuity is a fact, not an axis: hard clash if they asked for it
+  if(fitAns.cont==="cont"&&FIT[k]&&!FIT[k].sf)s=s==null?null:s-14;
+  if(fitAns.cont==="redecide"&&FIT[k]&&FIT[k].sf&&FIT[k].fee)s=s==null?null:s-6;
+  if(k==="cardinalnewman"&&faithSt==="none")s=s==null?null:s-12;
+  return s==null?null:Math.max(5,Math.min(98,s));}
+function fitWhy(k){  // the biggest driver and the biggest clash, named
+  const ax=fitAxes(k),pf=childPref();if(!ax)return"";
+  const gaps=pf.map((p,i)=>p==null?null:{i,d:Math.abs(p-ax[i]),hi:ax[i]>p}).filter(Boolean).sort((a,b)=>a.d-b.d);
+  if(!gaps.length)return"";
+  const best=gaps[0],worst=gaps[gaps.length-1];
+  const G=(g,good)=>{const n=AXNAMES[g.i].toLowerCase();
+    if(good)return n+" matches";
+    return g.hi?("more "+n.replace("known by name","tightly known").replace("academic intensity","academically intense")+" than you asked for")
+              :("less "+n.replace("known by name","personal in scale")+" than you asked for");};
+  return worst.d>22?`${G(best,true)}; ${G(worst,false)}`:`${G(best,true)}${gaps.length>1?"; "+G(gaps[1],true):""}`;}
+function fitVerdict(k){  // kept for the drill-down: clash list in words
+  const f=FIT[k];if(!f)return null;const clashes=[];
+  if(fitAns.pond==="small"&&f.size==="big")clashes.push("it's one of the biggest schools around");
+  if(fitAns.pond==="big"&&f.size==="small")clashes.push("it's small");
+  if(fitAns.style&&f.form&&fitAns.style!=="mixed"&&f.form!=="mixed"&&fitAns.style!==f.form)
+    clashes.push(`its culture reads ${f.form==="formal"?"structured":"relaxed"} — you said the opposite`);
+  if(fitAns.comm==="local"&&f.radius==="county")clashes.push("its community spans the county");
+  if(fitAns.cont==="cont"&&!f.sf)clashes.push("it ends at 16");
+  if(k==="cardinalnewman"&&faithSt==="none")clashes.push("the community is majority practising-Catholic");
+  return clashes;}
+function renderFit(){
+  const el=document.getElementById("fitout");
+  const answered=Object.keys(fitAns).length;
+  const qs=document.getElementById("fitquadsub");
+  if(qs)qs.textContent=answered?"Where every school sits on the two questions that decide this step.":"Answer the \u2018what suits them\u2019 questions on the previous step and every dot gets a fit height.";
+  if(!el){drawFitQuad();drawAlt();return;}
+  const ks=[...districtKeys(),...(feeSchools().map(pp=>pp.id))].filter(k=>FIT[k]);
+  if(!answered){el.innerHTML='<p class="small">Answer above and every school — free and fee-paying — gets a Fit Index.</p>';drawFitQuad();drawAlt();return;}
+  const rows=ks.map(k=>({k,s:fitScore(k),why:fitWhy(k)})).filter(r=>r.s!=null).sort((a,b)=>b.s-a.s);
+  const nameOf=k=>S[k]?S[k].name:(PRIV.find(pp=>pp.id===k)||{}).name||k;
+  const chip=s=>s>=75?["NATURAL FIT","sf"]:s>=55?["WORKABLE","faith"]:["OUTLIER",""];
+  const row=r=>{const[lab,cls]=chip(r.s);
+    return`<div style="display:flex;align-items:center;gap:.55rem;margin:.4rem 0" onclick="showSchool('${r.k}')" role="button">
+      <span style="flex:none;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.875rem;background:${r.s>=75?"var(--teal-soft)":r.s>=55?"#F7EEDB":"#EDF1F3"};color:${r.s>=75?"var(--teal)":r.s>=55?"var(--amber)":"var(--marine-soft)"}">${r.s}</span>
+      <span style="flex:1;min-width:0"><span style="font-size:.875rem;font-weight:600">${nameOf(r.k)}</span> <span class="chip ${cls}" style="font-size:.7rem">${lab}</span>${FIT[r.k].fee?'<span class="chip" style="font-size:.7rem">FEES</span>':""}<br>
+      <span class="note">${r.why||""}</span></span></div>`;};
+  const head=rows.slice(0,8),tail=rows.slice(8);
+  el.innerHTML=head.map(row).join("")
+   +(tail.length?`<details class="sec"><summary>${tail.length} more, scored</summary><div class="inner">${tail.map(row).join("")}</div></details>`:"")
+   +`<p class="small" style="margin-top:.4rem">Tap a school for the full read. The Index compares your answers with each school's culture axes — derived from gates, size, foundation and stated culture, never reviews.</p>`;
+  drawFitQuad();drawAlt();}
+function drawFitQuad(){
+  const el=document.getElementById("fitmap");if(!el)return;
+  const answered=Object.keys(fitAns).length;
+  const ks=[...districtKeys(),...(feeSchools().map(pp=>pp.id))].filter(k=>FIT[k]);
+  if(!ck){el.innerHTML="";return;}
+  const W=360,H=300,L=34,R=16,T=30,B=42;
+  const getx=k=>{
+    const p=PRIV.find(pp=>pp.id===k);
+    if(p)return p.id==="sho"?78:(p.entry.indexOf("13+")>=0?40:52);
+    const[[lo,hi]]=pOffer(k,statusFor(k,ck),fsm,sib);return Math.round(((lo+hi)/2)*100);};
+  let pts=ks.map(k=>({k,x:getx(k),y:answered?fitScore(k):50,fee:!!PRIV.find(pp=>pp.id===k),on:order.includes(k)})).filter(p=>p.y!=null);
+  // fit axis: stretch to the actual spread so schools separate instead of bunching
+  const ys=pts.map(p=>p.y),ylo=Math.max(0,Math.min(...ys)-6),yhi=Math.min(100,Math.max(...ys)+6);
+  const span=Math.max(18,yhi-ylo);
+  const X=v=>L+(W-L-R-14)*v/100+7, Y=v=>T+(H-T-B)*(1-(v-ylo)/span);
+  // greedy label placement: 6 candidate offsets, skip if it would collide
+  const placed=[];
+  const fits=(x,y,wd)=>!placed.some(p=>Math.abs(p.x-x)<(p.w+wd)/2+3&&Math.abs(p.y-y)<10);
+  pts.sort((a,b)=>(b.on-a.on)||(b.y-a.y));
+  const dots=pts.map(p=>{
+    const cx=X(p.x),cy=Y(p.y),r=p.on?7:5,lab=ABBR[p.k]||(S[p.k]?S[p.k].name:p.k);
+    const wd=lab.length*3.3;
+    let tx=null,ty=null;
+    for(const[dx,dy,anch] of [[0,-r-4,"middle"],[r+3,3,"start"],[-r-3,3,"end"],[0,r+8,"middle"],[r+3,-r,"start"],[-r-3,-r,"end"]]){
+      const cand={x:cx+dx+(anch==="start"?wd/2:anch==="end"?-wd/2:0),y:cy+dy,w:wd};
+      if(cand.x-wd/2>L-2&&cand.x+wd/2<W-R+4&&cand.y>T+2&&cand.y<H-B+6&&fits(cand.x,cand.y,wd)){
+        tx=cx+dx;ty=cy+dy;placed.push(cand);
+        return{p,cx,cy,r,lab,tx,ty,anch};}}
+    return{p,cx,cy,r,lab,tx:null};}).map(o=>{
+    const col=o.p.fee?"#B97F10":"#147D74";
+    return`<g onclick="showSchool('${o.p.k}')" style="cursor:pointer">
+      <circle cx="${o.cx}" cy="${o.cy}" r="${o.r}" fill="${col}" opacity="${o.p.on?.95:.6}"${o.p.on?' stroke="#0E2A38" stroke-width="1.6"':''}/>
+      ${o.tx!=null?`<text x="${o.tx}" y="${o.ty}" font-size="7.2" text-anchor="${o.anch}" fill="none" stroke="#F7F9FA" stroke-width="2.6" stroke-linejoin="round">${o.lab}</text>
+      <text x="${o.tx}" y="${o.ty}" font-size="7.2" text-anchor="${o.anch}" fill="${o.p.on?"#0E2A38":"#3E5766"}" font-weight="${o.p.on?700:400}">${o.lab}</text>`:""}
+    </g>`;}).join("");
+  const midY=(ylo+span/2);
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:600px;margin-top:.3rem">
+    <rect x="0" y="0" width="${W}" height="${H}" rx="8" fill="#F7F9FA"/>
+    <rect x="${X(55)}" y="${T}" width="${W-R-X(55)}" height="${Y(midY)-T}" fill="#147D74" opacity=".05"/>
+    <line x1="${X(55)}" y1="${T}" x2="${X(55)}" y2="${H-B}" stroke="#D9E0E4" stroke-dasharray="3,4"/>
+    <line x1="${L}" y1="${Y(midY)}" x2="${W-R}" y2="${Y(midY)}" stroke="#D9E0E4" stroke-dasharray="3,4"/>
+    <text x="${W-R-3}" y="${T-9}" font-size="7.4" text-anchor="end" fill="#147D74" font-weight="700">shortlist from this corner \u2197</text>
+    <text x="${L+2}" y="${T-9}" font-size="7" fill="#8A9BA8">good fit, long shot</text>
+    <text x="${L+2}" y="${H-B+11}" font-size="7" fill="#8A9BA8">\u2190 unlikely</text>
+    <text x="${W-R-3}" y="${H-B+11}" font-size="7" text-anchor="end" fill="#8A9BA8">near-certain \u2192</text>
+    ${dots}
+    <text x="${(L+W-R)/2}" y="${H-8}" font-size="7.6" text-anchor="middle" fill="#3E5766">your chance of a place \u2192</text>
+    <text x="10" y="${(T+H-B)/2}" font-size="7.6" text-anchor="middle" fill="#3E5766" transform="rotate(-90 10 ${(T+H-B)/2})">fit for your child \u2192</text>
+  </svg>
+  <p class="small">${answered?"":"<b>Answer the \u2018what suits them\u2019 questions on the previous step</b> and each dot rises or falls to its fit. "}Teal = free \u00b7 gold = fee-paying (their position across is the entrance gate, not a lottery). Bold ring = on your list. Tap any dot.</p>`;}
+
+function drawAlt(){
+  const el=document.getElementById("fitalt");if(!el)return;
+  const st=Object.keys(FIT).filter(k=>FIT[k].fsm!=null).sort((a,b)=>FIT[a].fsm-FIT[b].fsm);
+  el.innerHTML=`<h3 style="font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--marine-soft);margin:.9rem 0 .3rem">The altitude ladder</h3>`
+   +st.map(k=>`<div style="display:flex;align-items:center;gap:.5rem;margin:.2rem 0;font-size:.8rem">
+      <span style="width:110px;flex:none">${S[k]?S[k].name:k}</span>
+      <span style="flex:1;background:#EDF1F3;border-radius:4px;height:10px;position:relative"><span style="position:absolute;left:0;top:0;bottom:0;width:${FIT[k].fsm/55*100}%;background:#147D74;opacity:.75;border-radius:4px"></span></span>
+      <span style="width:44px;text-align:right">${FIT[k].fsm}%</span></div>`).join("")
+   +`<p class="small">Intake FSM, official census. The finding: <b>Blatchington Mill 17.9% and Hove Park 33% share one catchment</b> \u2014 preference sorting, not geography.</p>`;}
+
+function sharePlan(){
+  if(!order.length){document.getElementById("shareout").innerHTML='<div class="catch warn" style="margin-top:.7rem">Build a preference list first (step 2).</div>';return;}
+  let loN=1,hiN=1;
+  const lines=order.map((k,i)=>{
+    const[[lo,hi],n]=pOffer(k,statusFor(k,ck),fsm,sib);loN*=(1-hi);hiN*=(1-lo);
+    const w=walkInfo(document.getElementById("pc").value,k);
+    return`${i+1}. ${S[k].name} — ${Math.round(lo*100)}–${Math.round(hi*100)}% (${n})${w?` · ${w.bus?`~${w.km}km, bus`:`~${w.mins} min walk`}`:""}`;});
+  const pair=PAIRS[ck]&&PAIRS[ck].every(s=>order.includes(s));
+  if(pair){loN=0;hiN=0;}
+  const txt=`OUR SCHOOL PLAN — Brighton & Hove, Sept 2027 entry
+Catchment: ${CNAMES[ck]}
+
+${lines.join("\n")}
+
+Chance of none of our choices: ${pair?"0% (both catchment schools listed — council guarantee applies)":`${(loN*100).toFixed(1)}–${(hiN*100).toFixed(1)}%`}
+
+Made with the Brighton School Chooser (pilot). Probability ranges are estimates from DfE and council data — one year under the new rules. Deadline: 31 October. Verify catchment with the council: 01273 293653.`;
+  const done=m=>document.getElementById("shareout").innerHTML=
+    `<div class="catch" style="margin-top:.7rem">${m}</div><pre style="white-space:pre-wrap;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.8rem;font-size:.8rem;margin-top:.5rem">${txt.replace(/</g,"&lt;")}</pre>`;
+  if(navigator.share){navigator.share({text:txt}).then(()=>done("Shared.")).catch(()=>done("Copy the summary below:"));}
+  else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>done("Copied to clipboard — paste it to your partner:")).catch(()=>done("Copy the summary below:"));}
+  else done("Copy the summary below:");}
+(function(){const s=document.getElementById("prim");Object.keys(PRIM).sort((a,b)=>PRIM[a].n.localeCompare(PRIM[b].n)).forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=PRIM[k].n;s.appendChild(o);});})();
+window.__state=()=>({district,ck,order,prios,S,SLL,DISTRICTS,districtKeys});
+boot();drawFitQs();renderFit();drawGeo();
+document.getElementById("pc").addEventListener("input",drawGeo);
+document.getElementById("hn").addEventListener("input",drawGeo);
+</script>
+</body>
+</html>
